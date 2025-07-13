@@ -1,25 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap');
+
 * {
     margin: 0;
     padding: 0;
 
   }
-  
-html, body {
-    width: 100%;
-    height: 3637px;
-  }
 
-.page-wraper {
-    background-image: url('/assets/images/Item.png');
+body{
+    font-family: 'roboto', sans-serif;
+}
+
+.banner{
+    background-image: url('assets/images/Item.png');
     height: 1200px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    width: 100%;
   }
 
 .header {
     display: flex;
     height: 70px;
+    position: fixed;
+    width: 100%;
     
   }
 
@@ -29,7 +33,7 @@ html, body {
     left: 375px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .logo {
@@ -37,7 +41,6 @@ html, body {
     height: 42;
     top: 14px;
     left: 12px;
-    margin: 0 405px 0 387px;
 
 }
 
@@ -66,4 +69,202 @@ ul a {
     color: #FFFFFF;
 }
 
+/* Booking Reserva */
   
+.container-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.reserva {
+  width: 1146px;
+  height: 111px;
+  background-color: #C19B76;
+  display: flex;
+  align-items: center;
+  margin-top: -55px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+    font-weight: 500;
+    font-size: 34px;
+    line-height:40px;
+    width: 201px;
+    margin-left: 20px;
+    font-family: serif;
+    margin: 0 80px 0 20px;
+    font-family: 'DM Serif Text', serif;
+}
+
+.formulario {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 835px;
+    font-family: 'roboto', sans-serif;
+    
+}
+
+
+label {
+    margin-right: 20px;
+}
+
+form input {
+    padding: 10px;
+    width: 121px;
+    height: 38px;
+    border: 0;
+    font-size: 13px;
+}
+
+.btn-form {
+    height: 40px;
+    width: 102px;
+    border: 0;
+    background-color: #262423;
+    box-shadow: none;
+    color: #fff;
+
+}
+
+.input-date {
+    background-image: url('assets/images/arrow-right-solid.svg'); /* link do ícone */
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 16px 16px;
+    padding-left: 35px;
+    width: 121px;
+    height: 38px;
+    border: 0;
+    font-size: 13px;
+}
+
+form p {
+    color: #FFFFFF;
+    font-family: 'roboto', sans-serif;
+}
+
+#input-room {
+    width: 144px;
+}
+
+#input-adult {
+    width: 91px;
+}
+
+#input-kid {
+    width: 130px;
+}
+
+/* Sobre - Conteúdo */
+
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 874px;
+    width: 100%;
+    background-color: antiquewhite;
+}
+
+.gold-line {
+    height: 3px;               
+    width: 80px;                
+    background-color: #C19B76;
+    border: none;         
+    opacity: 1;      
+    margin-bottom: 24px;  
+}
+
+.content {
+    width: 585px;
+    height: 655px;
+    display: block;
+    align-items: start;
+    justify-content: start;
+    background-color: #f1f1f1;
+    font-family: 'DM Serif Text', serif;
+    padding-left: 11px;
+}
+
+.d-title {
+    font-size: 20px;
+    margin-bottom: 24px;
+}
+
+.d-text {
+    font-size: 14px;
+    font-family: 'roboto', sans-serif;
+    color: #7C7C7C;
+    margin-bottom: 24px;
+}
+
+.image-content {
+    width: 561px;
+    height: 693px;
+    background-color: #262423;
+}
+
+.service-box {
+    height: 290px;
+    width: 560px;
+}
+
+.box {
+    width: 268px;
+    height: 129px;
+    display: flex; 
+    background-color: #F6F7F8;
+    align-items: center;
+
+}
+
+.box-1 {
+    display: flex; 
+    background-color: #fff;
+}
+
+#box-rest {
+    margin: 0 24px 30px 0;
+}
+
+#box-wifi {
+    margin: 0 24px 0 0;
+}
+
+.box-2 {
+    display: flex; 
+    background-color: #fff;
+    align-items: center;
+}
+
+.box img {
+    width: 60px;
+    height: 67px;
+    margin: 20px 10px 41px 20px;
+}
+
+.service {
+    width: 158px;
+    height: 89px;
+    display: block;
+}
+
+.service h4 {
+    font-size: 20px;
+    color: #262423;
+    margin-bottom: 0px;
+}
+
+.service p {
+    font-size: 14px;
+    margin: 0px;
+    color: #7C7C7C;
+    margin-bottom: 10px;
+    font-family: 'roboto', sans-serif;
+}

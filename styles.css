@@ -138,7 +138,7 @@ form input, select, option{
 
 .form-select-1 {
   appearance: none;
-  background-image: url('/assets/Border.png'); /* Ícone de seta */
+  background-image: url('/assets/Border.png');
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
   background-size: 10px auto;

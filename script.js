@@ -26,7 +26,6 @@ form.addEventListener("submit", function (event) {
     errorMessage.style.color = "red";
     return;
   } else {
-    errorMessage.textContent = ""; // Clear the error message
     abrirModal();
   }
   emailInput.value = "";
@@ -104,34 +103,27 @@ document.addEventListener("DOMContentLoaded", function () {
   const filterLinks = document.querySelectorAll(".acomodacoes a");
   const filterableItems = document.querySelectorAll(".filterable-item");
 
-  // Adiciona um 'ouvinte' de clique para cada link de filtro
   filterLinks.forEach((link) => {
     link.addEventListener("click", function (event) {
-      event.preventDefault(); // Previne a navegação da página
+      event.preventDefault();
 
-      // Remove a classe 'active' de todos os links
       filterLinks.forEach((l) => l.classList.remove("active"));
-      // Adiciona a classe 'active' ao link clicado
+
       this.classList.add("active");
 
       const filterValue = this.getAttribute("data-filter");
 
-      // Itera sobre todos os itens de quarto
       filterableItems.forEach((item) => {
-        // Esconde todos os itens por padrão
+
         item.style.display = "none";
 
-        // Se o valor do filtro for 'todos' OU se o item tiver a classe correspondente, mostre-o.
-        // A função `classList.contains()` verifica se a classe existe.
         if (filterValue === "todos" || item.classList.contains(filterValue)) {
-          item.style.display = "block"; // Ou 'flex', 'grid', dependendo do seu layout original
+          item.style.display = "block";
         }
       });
     });
   });
 
-  // Simula um clique no link "TODOS" ao carregar a página
-  // para garantir que todos os itens sejam exibidos inicialmente.
   const todosLink = document.querySelector(
     '.acomodacoes a[data-filter="todos"]'
   );

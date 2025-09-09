@@ -11,19 +11,24 @@
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
+<link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
 </head>
 
 <body>
 
     <div class="page-wraper">
-        <header class="header">
+        <header class="header" >
             <div class="container">
                 <nav class="cabecalho">
-                    <div class="logo">
-                        <img src="assets/images/Link.png" alt="logo">
-                    </div>
+                    <a class="logo" href="#inicio">
+                        <img src="assets/images/logo-light.png" alt="logo">
+                    </a>
                     <ul class="nav_bar" id="nav-links">
-                        <li><a href="#" id="home">HOME</a></li>
+                        <li><a href="#inicio" id="home">HOME</a></li>
                         <li><a href="#">POST DETAIL</a></li>
                         <li><a href="#">PAGES</a></li>
                         <li><a href="#">PROJECTS</a></li>
@@ -33,7 +38,7 @@
 
             </div>
         </header>
-        <div class="page-content">
+        <div class="page-content" id="inicio">
             
             <div class="banner"></div>
             
@@ -50,7 +55,7 @@
                             <label for="" class="in-out">
                                 <p class="text">Entrada/Saída</p>
                                 <div class="d-flex">
-                                    <input type="text" class="input-date" placeholder="Entrada">
+                                    <input type="text" class="input-date" placeholder="Entrada" id="data">
                                     <input type="text" class="input-date" placeholder="Saída">
 
                                 </div>
@@ -58,17 +63,32 @@
 
                             <label for="" class="dados">
                                 <p class="text">Quarto</p>
-                                <input type="text" id="input-room" placeholder="Quarto">
+                                <select class="form-select-1" id="input-room" aria-label="Disabled select example">
+                                    <option selected disabled>Quarto</option>
+                                    <option value="1">Casal 01</option>
+                                    <option value="2">Solteiro 01</option>
+                                    <option value="3">Casal 02</option>
+                                  </select>
                             </label>
 
                             <label for="" class="dados">
                                 <p class="text">Adulto</p>
-                                <input type="text" id="input-adult" placeholder="Adulto">
+                                <select name="text" id="input-adult" placeholder="Adulto" class="form-select-1" >
+                                    <option selected disabled>Adulto</option>
+                                    <option value="opcao1">1</option>
+                                    <option value="opcao2">2</option>
+                                    <option value="opcao3">3</option>
+                                    </select>
                             </label>
 
                             <label for="" class="dados">
                                 <p class="text">Criança</p>
-                                <input type="text" id="input-kid" placeholder="Criança">
+                                <select name="text" id="input-adult" placeholder="Adulto" class="form-select-1" >
+                                    <option selected disabled >Criança</option>
+                                    <option value="opcao1">1</option>
+                                    <option value="opcao2">2</option>
+                                    <option value="opcao3">3</option>
+                                    </select>
                             </label>
 
                             <button type="submit" class="btn-form">Enviar</button>
@@ -139,14 +159,14 @@
                     <hr class="gold-line-2">
                     <div class="list-suites">
                         <ul class="acomodacoes">
-                            <li><a href="#">TODOS</a></li>
-                            <li><a href="#">CASAL</a></li>
-                            <li><a href="#">SOLTEIRO</a></li>
-                            <li><a href="#">SUÍTE</a></li>
+                            <li><a href="#" data-filter="todos" class="active">TODOS</a></li>
+                            <li><a href="#" data-filter="casal">CASAL</a></li>
+                            <li><a href="#" data-filter="solteiro">SOLTEIRO</a></li>
+                            <li><a href="#" data-filter="suite">SUÍTE</a></li>
                         </ul>
                     </div>
                     <div class="container-room">
-                        <div class="quarto-card">
+                        <div class="item casal filterable-item quarto-card">
                             <img src="assets/images/Group 1.png" alt="Quarto Casal 01">
                             <div class="conteudo-card">
                               <p class="preco">R$ 299,00/NOITE</p>
@@ -157,8 +177,8 @@
                               </div>
                             </div>
                         </div>
-                        <div class="quarto-card">
-                            <img src="assets/images/Group 2.png" alt="Quarto Casal 01">
+                        <div class="item solteiro filterable-item quarto-card">
+                            <img src="assets/images/Group 2.png" alt="Quarto solteiro 01">
                             <div class="conteudo-card">
                               <p class="preco">R$ 199,00/NOITE</p>
                               <div class="info">
@@ -168,7 +188,7 @@
                               </div>
                             </div>
                         </div>
-                        <div class="quarto-card">
+                        <div class="item casal suite filterable-item quarto-card">
                             <img src="assets/images/Group 3.png" alt="Quarto Casal 01">
                             <div class="conteudo-card">
                               <p class="preco">R$ 299,00/NOITE</p>
@@ -194,18 +214,27 @@
                             <p>Never Miss Anything From Construx By Signing Up To Our Newsletter.</p>
                         </div>
                         <div class="linha-vertical"></div>
-                        <form class="submit">
+                        <form class="submit" id="formEmail">
                             <label for="" class="d-flex">
-                                <input type="email" placeholder="DIGITE SEU EMAIL"> 
+                                <input type="email"  id="newEmail" placeholder="DIGITE SEU EMAIL"> 
                                 <button>ENVIAR <p class="p-line">-</p></button>
                             </label>
+                            <p id="erro" class="new-p mt-2"></p>
+                              <div id="meuModal" class="modal">
+                                <div class="modal-content d-flex flex-column align-items-center">
+                                    <span class="close" id="close">&times;</span>
+                                    <h2>✅ Sucesso!</h2>
+                                    <p>Inscrição realizada com sucesso!</p>
+                                    <button class="ok-btn" id="ok-btn">OK</button>
+                                </div>
+                            </div>
                         </form>
 
                     </div>
                     <hr>
                     <div class="media">
                         <div class="links">
-                            <img src="assets/images/logo-light.png.png" alt="">
+                            <img src="/assets/images/logo-light.png" alt="logo-light">
                             <p>Today we can tell you, thanks to your <br>
                                 passion, hard work creativity, and <br>
                                 expertise, you delivered us the most <br>
@@ -271,6 +300,9 @@
 
         </footer>
     </div>
+    <script src="script.js"></script>
 </body>
+
+
 
 </html>

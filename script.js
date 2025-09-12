@@ -29,7 +29,6 @@ form.addEventListener("submit", function (event) {
     abrirModal();
   }
   emailInput.value = "";
-  
 });
 
 function abrirModal() {
@@ -114,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const filterValue = this.getAttribute("data-filter");
 
       filterableItems.forEach((item) => {
-
         item.style.display = "none";
 
         if (filterValue === "todos" || item.classList.contains(filterValue)) {

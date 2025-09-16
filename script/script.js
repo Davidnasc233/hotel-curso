@@ -38,7 +38,8 @@ function abrirModal() {
     modal.style.display = "none";
   };
 
-  btnOk.onclick = () => {
+  btnOk.onclick = (event) => {
+    event.preventDefault();
     modal.style.display = "none";
   };
 
@@ -129,3 +130,47 @@ document.addEventListener("DOMContentLoaded", function () {
     todosLink.click();
   }
 });
+
+//requisições com backend
+
+const reserva = document.getElementById("formReserva");
+
+reserva.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const checkIn = document.getElementById("check_in").value;
+  const checkOut = document.getElementById("check_out").value;
+  const roomType = document.getElementById("room_type").value;
+  const guests = document.getElementById("guests").value;
+  const children = document.getElementById("children").value;
+
+  // Enviar dados para o backend
+  const data = {
+    check_in: checkIn,
+    check_out: checkOut,
+    room_type: parseInt(roomType, 10),
+    guests: parseInt(guests, 10),
+    children: parseInt(children, 10),
+  };
+
+  try {
+    const response = await fetch('http://localhost:3000/reservations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      alert('Reserva criada com sucesso! ID da reserva: ' + result.id);
+    } else {
+      alert('Erro ao criar reserva.');
+    }
+  } catch (error) {
+    console.error('Erro:', error);
+    alert('Erro ao conectar com o servidor.');
+  }
+});
+

@@ -182,11 +182,11 @@ form p {
   font-family: "roboto", sans-serif;
 }
 
-#input-room {
+#room_type {
   width: 144px;
 }
 
-#input-adult {
+#guests, #children {
   width: 91px;
 }
 

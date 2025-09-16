@@ -50,20 +50,20 @@
 
                         <h3 class="title">Reserva</h3>
 
-                        <form action="" class="formulario">
+                        <form class="formulario reservationsList" id="formReserva">
 
                             <label for="" class="in-out">
                                 <p class="text">Entrada/Saída</p>
                                 <div class="d-flex">
-                                    <input type="text" class="input-date" placeholder="Entrada" id="data">
-                                    <input type="text" class="input-date" placeholder="Saída">
+                                    <input type="text" class="input-date" placeholder="Entrada" id="check_in">
+                                    <input type="text" class="input-date" placeholder="Saída" id="check_out">
 
                                 </div>
                             </label>
 
                             <label for="" class="dados">
                                 <p class="text">Quarto</p>
-                                <select class="form-select-1" id="input-room" aria-label="Disabled select example">
+                                <select class="form-select-1" id="room_type" aria-label="Disabled select example">
                                     <option selected disabled>Quarto</option>
                                     <option value="1">Casal 01</option>
                                     <option value="2">Solteiro 01</option>
@@ -73,21 +73,21 @@
 
                             <label for="" class="dados">
                                 <p class="text">Adulto</p>
-                                <select name="text" id="input-adult" placeholder="Adulto" class="form-select-1" >
+                                <select name="text" id="guests" placeholder="Adulto" class="form-select-1" >
                                     <option selected disabled>Adulto</option>
-                                    <option value="opcao1">1</option>
-                                    <option value="opcao2">2</option>
-                                    <option value="opcao3">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
                                     </select>
                             </label>
 
                             <label for="" class="dados">
                                 <p class="text">Criança</p>
-                                <select name="text" id="input-adult" placeholder="Adulto" class="form-select-1" >
+                                <select name="text" id="children" placeholder="Adulto" class="form-select-1" >
                                     <option selected disabled >Criança</option>
-                                    <option value="opcao1">1</option>
-                                    <option value="opcao2">2</option>
-                                    <option value="opcao3">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
                                     </select>
                             </label>
 
@@ -300,7 +300,7 @@
 
         </footer>
     </div>
-    <script src="script.js"></script>
+    <script src="./script/script.js"></script>
 </body>
 
 

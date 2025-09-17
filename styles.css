@@ -135,7 +135,7 @@ option {
 
 .form-select-1 {
   appearance: none;
-  background-image: url("/assets/Border.png");
+  background-image: url("assets/images/border.png");
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
   background-size: 10px auto;
@@ -171,7 +171,7 @@ option {
   background-position: 10px center;
   background-size: 16px 16px;
   padding-left: 35px;
-  width: 121px;
+  width: 135px;
   height: 38px;
   border: 0;
   font-size: 13px;
@@ -186,7 +186,8 @@ form p {
   width: 144px;
 }
 
-#guests, #children {
+#guests,
+#children {
   width: 91px;
 }
 
@@ -614,8 +615,21 @@ button:hover {
   align-items: center;
 }
 
+.modal.show {
+  display: flex;
+}
+
+#content-modal-room {
+  min-width: 600px;
+  height: 400px;
+  gap: 20px;
+}
+
 .modal-content {
   background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
   border-radius: 10px;
   max-width: 300px;

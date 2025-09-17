@@ -1,124 +1,93 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM fully loaded and parsed");
 
-  if (!form || !emailInput || !errorMessage || !modal || !btnFechar || !btnOk) {
-    console.error("Elementos necessários não encontrados no DOM.");
-    return;
-  }
-});
+  // Header
+  const header = document.querySelector("header");
+  const form = document.getElementById("formEmail");
+  const emailInput = document.getElementById("newEmail");
+  const errorMessage = document.getElementById("erro");
 
-const header = document.querySelector("header");
-const form = document.getElementById("formEmail");
-const emailInput = document.getElementById("newEmail");
-const errorMessage = document.getElementById("erro");
+  const modalNewsletter = document.getElementById("meuModalSucesso");
+  const btnFecharNewsletter = document.getElementById("closeSucesso");
+  const btnOkNewsletter = document.getElementById("ok-btn-sucesso");
 
-const modal = document.getElementById("meuModal");
-const btnFechar = document.getElementById("close");
-const btnOk = document.getElementById("ok-btn");
-
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const email = emailInput.value.trim();
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!regex.test(email)) {
-    errorMessage.textContent = "Por favor, insira um email válido.";
-    errorMessage.style.color = "red";
-    return;
-  } else {
-    abrirModal();
-  }
-  emailInput.value = "";
-});
-
-function abrirModal() {
-  modal.style.display = "flex";
-
-  btnFechar.onclick = () => {
-    modal.style.display = "none";
-  };
-
-  btnOk.onclick = (event) => {
+  form.addEventListener("submit", function (event) {
     event.preventDefault();
-    modal.style.display = "none";
-  };
 
-  window.onclick = (event) => {
-    if (event.target === modal) {
-      modal.style.display = "none";
+    const email = emailInput.value.trim();
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(email)) {
+      errorMessage.textContent = "Por favor, insira um email válido.";
+      errorMessage.style.color = "red";
+      return;
+    } else {
+      abrirModal();
     }
-  };
-}
+    emailInput.value = "";
+  });
 
-document.addEventListener("scroll", function () {
-  if (window.scrollY > 0) {
-    header.classList.add("header-bg");
-  } else {
-    header.classList.remove("header-bg");
+  function abrirModal() {
+    modalNewsletter.style.display = "flex";
+
+    btnFechar.onclick = () => {
+      btnFecharNewsletter.style.display = "none";
+    };
+
+    btnOk.onclick = (event) => {
+      event.preventDefault();
+      btnOkNewsletter.style.display = "none";
+    };
+
+    window.onclick = (event) => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
   }
 
-  const input = document.getElementById("input-room");
-  const optionsList = document.getElementById("options-list");
+  // Inputs de datas
+  const checkInInput = document.getElementById("check_in");
+  const checkOutInput = document.getElementById("check_out");
 
-  // abre/fecha lista ao clicar no input
-  input.addEventListener("click", () => {
-    optionsList.style.display =
-      optionsList.style.display === "block" ? "none" : "block";
-  });
-
-  // quando clica em uma opção
-  optionsList.querySelectorAll("div").forEach((option) => {
-    option.addEventListener("click", () => {
-      input.value = option.textContent;
-      optionsList.style.display = "none";
+  if (checkInInput) {
+    checkInInput.addEventListener("change", () => {
+      console.log("Data de entrada selecionada:", checkInInput.value);
     });
-  });
+  } else {
+    console.warn("Elemento 'check_in' não encontrado.");
+  }
 
-  // fecha se clicar fora
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest(".custom-select")) {
-      optionsList.style.display = "none";
+  if (checkOutInput) {
+    checkOutInput.addEventListener("change", () => {
+      console.log("Data de saída selecionada:", checkOutInput.value);
+    });
+  } else {
+    console.warn("Elemento 'check_out' não encontrado.");
+  }
+
+  // Scroll header
+  document.addEventListener("scroll", () => {
+    if (header) {
+      if (window.scrollY > 0) header.classList.add("header-bg");
+      else header.classList.remove("header-bg");
     }
   });
-});
 
-const inputs = document.getElementsByClassName("input-date");
-
-Array.from(inputs).forEach((input) => {
-  input.addEventListener("input", (e) => {
-    let valor = e.target.value.replace(/\D/g, "");
-    if (valor.length > 8) valor = valor.slice(0, 8);
-
-    if (valor.length > 4) {
-      valor = valor.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-    } else if (valor.length > 2) {
-      valor = valor.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-    }
-
-    e.target.value = valor;
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
+  // Filtro de acomodações
   const filterLinks = document.querySelectorAll(".acomodacoes a");
   const filterableItems = document.querySelectorAll(".filterable-item");
 
   filterLinks.forEach((link) => {
     link.addEventListener("click", function (event) {
       event.preventDefault();
-
       filterLinks.forEach((l) => l.classList.remove("active"));
-
       this.classList.add("active");
-
       const filterValue = this.getAttribute("data-filter");
-
       filterableItems.forEach((item) => {
-        item.style.display = "none";
-
-        if (filterValue === "todos" || item.classList.contains(filterValue)) {
-          item.style.display = "block";
-        }
+        item.style.display =
+          filterValue === "todos" || item.classList.contains(filterValue)
+            ? "block"
+            : "none";
       });
     });
   });
@@ -126,51 +95,69 @@ document.addEventListener("DOMContentLoaded", function () {
   const todosLink = document.querySelector(
     '.acomodacoes a[data-filter="todos"]'
   );
-  if (todosLink) {
-    todosLink.click();
-  }
-});
+  if (todosLink) todosLink.click();
 
-//requisições com backend
-
-const reserva = document.getElementById("formReserva");
-
-reserva.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const checkIn = document.getElementById("check_in").value;
-  const checkOut = document.getElementById("check_out").value;
-  const roomType = document.getElementById("room_type").value;
-  const guests = document.getElementById("guests").value;
-  const children = document.getElementById("children").value;
-
-  // Enviar dados para o backend
-  const data = {
-    check_in: checkIn,
-    check_out: checkOut,
-    room_type: parseInt(roomType, 10),
-    guests: parseInt(guests, 10),
-    children: parseInt(children, 10),
+  const quartos = {
+    casal01: {
+      title: "Detalhes do Quarto Casal 01",
+      description:
+        "Este quarto possui uma cama de casal, ar-condicionado, Wi-Fi gratuito e uma vista incrível.",
+      price: "R$ 299,00 por noite",
+    },
+    solteiro01: {
+      title: "Detalhes do Quarto Solteiro 01",
+      description:
+        "Este quarto possui uma cama de solteiro, ar-condicionado, Wi-Fi gratuito e uma vista incrível.",
+      price: "R$ 199,00 por noite",
+    },
+    casalSuite: {
+      title: "Detalhes da Suíte Casal",
+      description:
+        "Esta suíte possui uma cama de casal, ar-condicionado, Wi-Fi gratuito, banheira e uma vista incrível.",
+      price: "R$ 299,00 por noite",
+    },
   };
+  const modalRoom = document.getElementById("modalRoom");
+  const closeModalRoom = document.getElementById("closeModalRoom");
+  const btnCloseModal = modalRoom.querySelector(".btn-close-modal");
 
-  try {
-    const response = await fetch('http://localhost:3000/reservations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      alert('Reserva criada com sucesso! ID da reserva: ' + result.id);
-    } else {
-      alert('Erro ao criar reserva.');
+  // Função para abrir o modal e preencher o conteúdo
+  function abrirModal(quartoId) {
+    const quarto = quartos[quartoId];
+    if (quarto) {
+      document.getElementById("modalTitle").textContent = quarto.title;
+      document.getElementById("modalDescription").textContent =
+        quarto.description;
+      document.getElementById(
+        "modalPrice"
+      ).innerHTML = `Preço: <strong>${quarto.price}</strong>`;
+      modalRoom.classList.add("show");
     }
-  } catch (error) {
-    console.error('Erro:', error);
-    alert('Erro ao conectar com o servidor.');
   }
-});
 
+  // Função para fechar o modal
+  function fecharModal() {
+    modalRoom.classList.remove("show");
+  }
+
+  // Eventos para fechar o modal
+  if (closeModalRoom) {
+    closeModalRoom.addEventListener("click", fecharModal);
+  }
+
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener("click", fecharModal);
+  }
+
+  window.addEventListener("click", (event) => {
+    if (event.target === modalRoom) {
+      fecharModal();
+    }
+  });
+
+  // Adicionar eventos aos botões "SAIBA MAIS"
+  document.querySelectorAll(".quarto-card button").forEach((button, index) => {
+    const quartoIds = ["solteiro01", "casal01", "casalSuite"];
+    button.addEventListener("click", () => abrirModal(quartoIds[index]));
+  });
+});

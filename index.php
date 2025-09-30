@@ -1,6 +1,6 @@
 <?php
 
-require_once "./config/db.php";
+require_once "./config/conexao.php";
 require_once "./models/reserva.php";
 
 $reserva = new Reserva($pdo);
@@ -14,7 +14,7 @@ $dados = $reserva->listar();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotel | David Dias</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" type="text/css"
@@ -43,7 +43,9 @@ $dados = $reserva->listar();
         </header>
         <div class="page-content" id="inicio">
 
-            <div class="banner"></div>
+            <div class="banner">
+                <img src="assets/images/Item.png">
+            </div>
 
             <div class="section-full">
 
@@ -329,7 +331,7 @@ $dados = $reserva->listar();
 
         </footer>
     </div>
-    <script src="./script/script.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 

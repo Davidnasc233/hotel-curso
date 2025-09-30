@@ -10,7 +10,6 @@ body {
 }
 
 .banner {
-  background-image: url("assets/images/Item.png");
   height: 1200px;
   background-repeat: no-repeat;
   background-size: cover;

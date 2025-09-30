@@ -8,7 +8,7 @@ class Reserva {
 
     public function criar($checkin, $checkout, $room, $guests, $children) {
         $stmt = $this->pdo->prepare("INSERT INTO reservas (checkin, checkout, room, guests, children)
-                                     VALUES (?, ?, ?, ?, ?)");
+            VALUES (?, ?, ?, ?, ?)");
         return $stmt->execute([$checkin, $checkout, $room, $guests, $children]);
     }
 

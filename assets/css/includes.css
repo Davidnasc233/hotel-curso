@@ -1,0 +1,311 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "roboto", sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  height: 70px;
+  width: 100%;
+  background-color: #150e07;
+}
+
+.container-header {
+  width: 80%;
+}
+
+.cabecalho {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 135.25;
+  height: 42;
+  cursor: pointer;
+}
+
+nav ul {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 2px;
+  vertical-align: middle;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+ul a {
+  text-decoration: none;
+  margin: 14px 12px;
+  color: #ffffff;
+}
+
+ul a:hover {
+  color: #c19b76;
+}
+
+/* Footer */
+
+button {
+  background-color: #c19b76;
+  width: 120px;
+  height: 43px;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background-color: #a87e5f;
+}
+
+/* Footer - rodapé */
+
+.container-footer {
+  height: 473px;
+  width: 100%;
+  color: #999999;
+  background-color: #150e07;
+  display: flex;
+  font-size: 14px;
+}
+
+.social {
+  width: 1170px;
+  height: 413px;
+  display: flex;
+  flex-direction: column;
+  margin: 50px 375px;
+  padding: 0 12px;
+}
+
+.newsletter {
+  margin-top: 0;
+  display: flex;
+  flex-direction: row;
+}
+.news {
+  width: 561px;
+  height: 56px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+#content-modal-room {
+  min-width: 600px;
+  height: 400px;
+  gap: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  animation: aparecer 0.3s ease;
+}
+
+.modal-content p {
+  margin: 0 0 15px;
+  font-size: 20px;
+  color: #999 !important;
+}
+
+@keyframes aparecer {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Botão fechar */
+.close {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+.close:hover {
+  color: red;
+}
+
+/* Botão OK */
+.ok-btn {
+  margin-top: 15px;
+  padding: 8px 15px;
+  border: none;
+  background: #28a745;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.ok-btn:hover {
+  background: #218838;
+}
+
+.social h4 {
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: "DM Serif Text", serif;
+}
+
+.submit {
+  width: 561px;
+  height: 53px;
+  margin-left: 24px;
+}
+
+.submit label {
+  margin: 0;
+}
+
+.submit button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p-line {
+  height: 5px;
+  margin-left: 5px;
+}
+
+.linha-vertical {
+  width: 1px;
+  height: 56px;
+  background-color: #fff;
+}
+
+.container-footer hr {
+  width: 1146px;
+  margin-top: 60px;
+  height: 2px;
+  background-color: #d3d3d3;
+  opacity: 0.5;
+  border: none;
+}
+
+.media {
+  display: flex;
+  margin-top: 10px;
+}
+
+.newsletter input {
+  width: 417px;
+  height: 53px;
+}
+
+.newsletter button {
+  width: 143px;
+  height: 53px;
+}
+
+.company {
+  background-color: #0d0904;
+  color: #b7b7b7;
+  width: 100%;
+  font-size: 13px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-teste {
+  margin: 0;
+}
+
+.links {
+  margin-right: 24px;
+  width: 268px;
+}
+
+.links img {
+  margin: 15px 0 22px;
+}
+
+.links p {
+  font-size: 14px;
+  margin-bottom: 30px;
+  color: #999999;
+}
+.links li {
+  list-style: none;
+  margin: 12px 0;
+  padding-left: 0;
+  font-size: 12px;
+}
+
+.links ul {
+  padding: 0;
+  margin: 28px 0 20px 0;
+}
+
+.social a {
+  color: #c19b76;
+  margin: 5px;
+  text-decoration: none;
+}
+
+.contact {
+  font-size: 14px;
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 28px;
+}
+
+.contact li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.contact li i {
+  font-size: 14px;
+}
+
+.d-flex p {
+  font-size: 16px;
+  font-weight: 500;
+}

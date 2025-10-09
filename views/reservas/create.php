@@ -1,33 +1,3 @@
-<?php
-require_once '../../config/conexao.php';
-require_once '../../models/quarto.php';
-
-$quartoModel = new Quarto($pdo);
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Capturar os dados do formulário
-    $numero = $_POST['numero'] ?? null;
-    $tipo = $_POST['tipo'] ?? null;
-    $preco = $_POST['preco'] ?? null;
-    $descricao = $_POST['descricao'] ?? null;
-    $ativo = isset($_POST['ativo']) ? 1 : 0; // Checkbox retorna 1 se marcado, 0 se não
-
-    // Validar os dados (opcional, mas recomendado)
-    if ($numero && $tipo && $preco && $descricao) {
-        try {
-            // Inserir os dados no banco
-            $stmt = $pdo->prepare("INSERT INTO quartos (numero, tipo, preco, descricao, ativo) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$numero, $tipo, $preco, $descricao, $ativo]);
-
-            echo "<p>✅ Quarto cadastrado com sucesso!</p>";
-        } catch (PDOException $e) {
-            echo "<p>❌ Erro ao cadastrar o quarto: " . $e->getMessage() . "</p>";
-        }
-    } else {
-        echo "<p>❌ Por favor, preencha todos os campos obrigatórios.</p>";
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h1>Cadastrar Novo Quarto</h1>
                 </div>
                 <div class="container-form">
-                    <form action="create.php" method="POST">
+                    <form action="../../routes/quarto-routes.php" href="./sucesso.php" method="POST">
+                        <input type="hidden" name="action" value="create">
                         <label for="numero">
                             <p>Numero do Quarto*</p>
                             <input class="form-input" type="number" id="numero" name="numero" required>

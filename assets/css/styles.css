@@ -9,12 +9,12 @@ body {
   font-family: "roboto", sans-serif;
 }
 
-.banner {
+.banner img{
   height: 1200px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
-  width: 100%;
+  width: -webkit-fill-available;
 }
 
 .header {
@@ -134,7 +134,7 @@ option {
 
 .form-select-1 {
   appearance: none;
-  background-image: url("assets/images/border.png");
+  background-image: url("../images/border.png");
   background-repeat: no-repeat;
   background-position: right 10px top 50%;
   background-size: 10px auto;
@@ -158,6 +158,7 @@ option {
 .btn-form {
   height: 40px;
   width: 102px;
+  border-radius: 5px;
   border: 0;
   background-color: #262423;
   box-shadow: none;
@@ -165,7 +166,7 @@ option {
 }
 
 .input-date {
-  background-image: url("assets/images/arrow-right-solid.svg");
+  background-image: url("../images/arrow-right-solid.svg");
   background-repeat: no-repeat;
   background-position: 10px center;
   background-size: 16px 16px;
@@ -324,6 +325,7 @@ form p {
 
 .btn-service {
   margin-top: 30px;
+  border-radius: 5px;
   display: flex;
   border: none;
   background-color: #c19b76;
@@ -492,7 +494,6 @@ form p {
 
 .quarto-card:hover .center-img {
   position: absolute;
-  left: 5px;
 }
 
 .conteudo-card {
@@ -557,6 +558,7 @@ form p {
 
 button {
   background-color: #c19b76;
+  border-radius: 5px !important;
   width: 120px;
   height: 43px;
   color: #fff;
@@ -808,4 +810,78 @@ button:hover {
 .d-flex p {
   font-size: 16px;
   font-weight: 500;
+}
+
+/* Modal Reserva */
+
+.modal-reserva {
+  display: none; /* Inicialmente oculto */
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-conteudo {
+  background: #fff;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 40%;
+  position: relative;
+  box-shadow: 0 4px 32px #463f3f22;
+}
+.modal-fechar {
+  position: absolute;
+  top: 12px; right: 18px;
+  font-size: 22px;
+  color: #333; cursor: pointer;
+}
+
+
+.title-modal-reservation {
+  color: #8d8d8d !important;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+#formModalInputs input{
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#formModalInputs p {
+  margin-bottom: 5px;
+}
+
+.btn-modal-reservation,
+.btn-outline-secondary {
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.vertical-line{
+  width: 1px;        
+  background: #c4c4c4;  
+  margin: 0 16px;       
+  align-self: stretch; 
+}
+
+.content-form-reservation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input-content {
+  width: 40%;
 }

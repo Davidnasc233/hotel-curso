@@ -96,9 +96,59 @@ $dados = $reserva->listar();
                                 </select>
                             </label>
 
-                            <button type="submit" class="btn-form">Enviar</button>
+                            <button type="button" id="openModalReserva" class="btn-form"
+                                onclick="abrirModalReserva()">Enviar</button>
 
                         </form>
+                        <div id="modalReserva" class="modal-reserva" style="display: none;">
+                            <div class="modal-conteudo">
+                                <span class="modal-fechar" id="fecharModalReserva">&times;</span>
+                                <h3>Complete sua reserva</h3>
+                                <hr>
+                                <form id="formModalInputs">
+                                    <div class="content-form-reservation">
+                                        <div class="input-content">
+                                            <p class="title-modal-reservation">Nome*</p>
+                                            <input type="text" name="nome" placeholder="Seu nome completo" required>
+                                            <p class="title-modal-reservation">Email*</p>
+                                            <input type="email" name="email" placeholder="Seu e-mail" required>
+                                            <p class="title-modal-reservation">CPF*</p>
+                                            <input type="number" name="cpf" placeholder="Seu CPF" required>
+                                            <p class="title-modal-reservation">Telefone*</p>
+                                            <input type="tel" name="telefone" placeholder="Seu telefone" required>
+                                        </div>
+                                        <div class="vertical-line" aria-hidden="true"></div>
+                                        <div>
+                                            <div class="box" id="box-rest">
+                                                <img src="assets/images/pngtree-sun-line-icon-png-image_9040760.png"
+                                                    alt="" style="width: 60px; height: 60px;">
+                                                <div class="service">
+                                                    <h4>Conforto</h4>
+                                                    <p class="mt-2">Escolha entre suítes com <br> vista para o pôr do
+                                                        sol.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="box" id="box-rest">
+                                                <img src="assets/images/2094581.png"
+                                                    alt="" style="width: 60px; height: 60px;">
+                                                <div class="service">
+                                                    <h4>Gastronomia</h4>
+                                                    <p class="mt-2">Sabores que contam histórias. Do café da manhã ao
+                                                        jantar.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mt-2 gap-2">
+                                    <button class="btn btn-outline-secondary">Cancelar</button>    
+                                    <button type="submit" class="btn-modal-reservation">Confirmar Reserva</button>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="main-content">
@@ -248,7 +298,7 @@ $dados = $reserva->listar();
                         <form class="submit" id="formEmail">
                             <label for="" class="d-flex">
                                 <input type="email" id="newEmail" placeholder="DIGITE SEU EMAIL">
-                                <button>ENVIAR <p class="p-line">-</p></button>
+                                <button style="border-radius: 0 !important;">ENVIAR <p class="p-line">-</p></button>
                             </label>
                             <p id="erro" class="new-p mt-2"></p>
                             <div id="meuModalSucesso" class="modal">
@@ -331,7 +381,7 @@ $dados = $reserva->listar();
 
         </footer>
     </div>
-    <script src="./assets/js/script.js"></script>
+    <script type="module" src="./assets/js/script.js"></script>
 </body>
 
 

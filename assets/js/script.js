@@ -1,10 +1,10 @@
 // js/main.js
 
 // Importa as funções de inicialização de cada módulo
-import { initNewsletter } from './modules/newsletter.js';
-import { initHeaderScroll } from './modules/headerScroll.js';
-import { initAccommodationFilter } from './modules/accommodationFilter.js';
-import { initRoomModal } from './modules/roomModal.js';
+import { initNewsletter } from "../../assets/js/modules/newsletter.js";
+import { initHeaderScroll } from "../../assets/js/modules/header-scroll.js";
+import { initAccommodationFilter } from "../../assets/js/modules/accommodation-filter.js";
+import { initRoomModal } from "../../assets/js/modules/room-modal.js";
 
 // Espera o DOM carregar completamente para executar os scripts
 document.addEventListener("DOMContentLoaded", function () {
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initHeaderScroll();
   initAccommodationFilter();
   initRoomModal();
-  
+
   // O código dos inputs de data pode ficar aqui se for simples,
   // ou ser movido para seu próprio módulo (ex: datePicker.js) se crescer.
   const checkInInput = document.getElementById("check_in");

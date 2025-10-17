@@ -2,9 +2,13 @@
 
 require_once "./config/conexao.php";
 require_once "./models/reserva.php";
+require_once "./models/quarto.php";
 
 $reserva = new Reserva($pdo);
 $dados = $reserva->listar();
+
+$quartoModel = new Quarto($pdo);
+$quartos = $quartoModel->listar();
 ?>
 
 <!DOCTYPE html>
@@ -55,29 +59,35 @@ $dados = $reserva->listar();
 
                         <h3 class="title">Reserva</h3>
 
-                        <form class="formulario reservationsList" id="formReserva">
+                        <div method="POST" class="formulario reservationsList" id="formReserva">
 
                             <label for="" class="in-out">
                                 <p class="text">Entrada/Saída</p>
                                 <div class="d-flex">
-                                    <input type="date" class="input-date" placeholder="Entrada" id="check_in">
-                                    <input type="date" class="input-date" placeholder="Saída" id="check_out">
+                                    <input type="date" class="input-date" placeholder="Entrada" id="check_in"
+                                        name="data_checkin">
+                                    <input type="date" class="input-date" placeholder="Saída" id="check_out"
+                                        name="data_checkout">
                                 </div>
                             </label>
 
                             <label for="" class="dados">
                                 <p class="text">Quarto</p>
-                                <select class="form-select-1" id="room_type" aria-label="Disabled select example">
+                                <select class="form-select-1" id="room_type" name="quarto_id"
+                                    aria-label="Disabled select example">
                                     <option selected disabled>Quarto</option>
-                                    <option value="1">Casal 01</option>
-                                    <option value="2">Solteiro 01</option>
-                                    <option value="3">Casal 02</option>
+                                    <?php foreach ($quartos as $quarto): ?>
+                                        <option value="<?= $quarto['id'] ?>">
+                                            <?= htmlspecialchars($quarto['tipo']) ?>
+                                            <?= htmlspecialchars($quarto['numero']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </label>
 
                             <label for="" class="dados">
                                 <p class="text">Adulto</p>
-                                <select name="text" id="guests" placeholder="Adulto" class="form-select-1">
+                                <select name="guests" id="guests" placeholder="Adulto" class="form-select-1">
                                     <option selected disabled>Adulto</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -87,7 +97,7 @@ $dados = $reserva->listar();
 
                             <label for="" class="dados">
                                 <p class="text">Criança</p>
-                                <select name="text" id="children" placeholder="Adulto" class="form-select-1">
+                                <select name="children" id="children" placeholder="Adulto" class="form-select-1">
                                     <option selected disabled>Criança</option>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
@@ -98,55 +108,60 @@ $dados = $reserva->listar();
 
                             <button type="button" id="openModalReserva" class="btn-form"
                                 onclick="abrirModalReserva()">Enviar</button>
-
-                        </form>
-                        <div id="modalReserva" class="modal-reserva" style="display: none;">
-                            <div class="modal-conteudo">
-                                <span class="modal-fechar" id="fecharModalReserva">&times;</span>
-                                <h3>Complete sua reserva</h3>
-                                <hr>
-                                <form id="formModalInputs">
-                                    <div class="content-form-reservation">
-                                        <div class="input-content">
-                                            <p class="title-modal-reservation">Nome*</p>
-                                            <input type="text" name="nome" placeholder="Seu nome completo" required>
-                                            <p class="title-modal-reservation">Email*</p>
-                                            <input type="email" name="email" placeholder="Seu e-mail" required>
-                                            <p class="title-modal-reservation">CPF*</p>
-                                            <input type="number" name="cpf" placeholder="Seu CPF" required>
-                                            <p class="title-modal-reservation">Telefone*</p>
-                                            <input type="tel" name="telefone" placeholder="Seu telefone" required>
-                                        </div>
-                                        <div class="vertical-line" aria-hidden="true"></div>
-                                        <div>
-                                            <div class="box" id="box-rest">
-                                                <img src="assets/images/pngtree-sun-line-icon-png-image_9040760.png"
-                                                    alt="" style="width: 60px; height: 60px;">
-                                                <div class="service">
-                                                    <h4>Conforto</h4>
-                                                    <p class="mt-2">Escolha entre suítes com <br> vista para o pôr do
-                                                        sol.
-                                                    </p>
+                            <div id="modalReserva" class="modal-reserva" style="display: none;">
+                                <div class="modal-conteudo">
+                                    <span class="modal-fechar" id="fecharModalReserva">&times;</span>
+                                    <h3>Complete sua reserva</h3>
+                                    <hr>
+                                    <form id="formModalInputs">
+                                        <div class="content-form-reservation">
+                                            <div class="input-content">
+                                                <p class="title-modal-reservation">Nome*</p>
+                                                <input type="text" name="nome_cliente" placeholder="Seu nome completo"
+                                                    required>
+                                                <p class="title-modal-reservation">Email*</p>
+                                                <input type="email" name="email" placeholder="Seu e-mail" required>
+                                                <p class="title-modal-reservation">CPF*</p>
+                                                <input type="number" name="cpf" placeholder="Seu CPF" required>
+                                                <p class="title-modal-reservation">Telefone*</p>
+                                                <input type="tel" name="telefone" placeholder="Seu telefone" required>
+                                            </div>
+                                            <div class="vertical-line" aria-hidden="true"></div>
+                                            <div>
+                                                <div class="box" id="box-rest">
+                                                    <img src="assets/images/pngtree-sun-line-icon-png-image_9040760.png"
+                                                        alt="" style="width: 60px; height: 60px;">
+                                                    <div class="service">
+                                                        <h4>Conforto</h4>
+                                                        <p class="mt-2">Escolha entre suítes com <br> vista para o pôr
+                                                            do
+                                                            sol.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="box" id="box-rest">
+                                                    <img src="assets/images/2094581.png" alt=""
+                                                        style="width: 60px; height: 60px;">
+                                                    <div class="service">
+                                                        <h4>Gastronomia</h4>
+                                                        <p class="mt-2">Sabores que contam histórias. Do café da manhã
+                                                            ao
+                                                            jantar.
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="box" id="box-rest">
-                                                <img src="assets/images/2094581.png"
-                                                    alt="" style="width: 60px; height: 60px;">
-                                                <div class="service">
-                                                    <h4>Gastronomia</h4>
-                                                    <p class="mt-2">Sabores que contam histórias. Do café da manhã ao
-                                                        jantar.
-                                                    </p>
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end mt-2 gap-2">
-                                    <button class="btn btn-outline-secondary">Cancelar</button>    
-                                    <button type="submit" class="btn-modal-reservation">Confirmar Reserva</button>
-
-                                    </div>
-                                </form>
+                                        <div class="d-flex justify-content-end mt-2 gap-2">
+                                            <button class="btn btn-outline-secondary">
+                                                Cancelar
+                                            </button>
+                                            <button type="submit" class="btn-modal-reservation">
+                                                Confirmar Reserva
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

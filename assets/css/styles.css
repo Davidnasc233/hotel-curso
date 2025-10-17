@@ -9,7 +9,7 @@ body {
   font-family: "roboto", sans-serif;
 }
 
-.banner img{
+.banner img {
   height: 1200px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -838,11 +838,12 @@ button:hover {
 }
 .modal-fechar {
   position: absolute;
-  top: 12px; right: 18px;
+  top: 12px;
+  right: 18px;
   font-size: 22px;
-  color: #333; cursor: pointer;
+  color: #333;
+  cursor: pointer;
 }
-
 
 .title-modal-reservation {
   color: #8d8d8d !important;
@@ -850,11 +851,11 @@ button:hover {
   text-transform: capitalize;
 }
 
-#formModalInputs input{
+#formModalInputs input {
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   outline: none;
-  width: 100%;
+  width: 100% !important;
   margin-bottom: 10px;
 }
 
@@ -869,11 +870,11 @@ button:hover {
   border-radius: 5px;
 }
 
-.vertical-line{
-  width: 1px;        
-  background: #c4c4c4;  
-  margin: 0 16px;       
-  align-self: stretch; 
+.vertical-line {
+  width: 1px;
+  background: #c4c4c4;
+  margin: 0 16px;
+  align-self: stretch;
 }
 
 .content-form-reservation {

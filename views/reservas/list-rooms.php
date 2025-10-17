@@ -23,51 +23,68 @@ if (!isset($quartos)) {
 <body>
     <?php include '../includes/header.php'; ?>
     <div class="container-main" style="justify-content: initial;">
-    <div class="sign-room">
-        <div class="title">
-            <h1>Lista de Quartos</h1>
-            <a href="./create.php" class="btn btn-success">
-                Novo Quarto
-            </a>
-        </div>
-        <div class="container-form">
-            <table cellpadding="8" cellspacing="0">
-                <thead >
-                    <tr class="grid-header">
-                        <th>Id</th>
-                        <th>Número</th>
-                        <th>Tipo</th>
-                        <th>Preço</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($quartos)): ?>
-                        <tr>
-                            <td colspan="6" style="text-align: center; padding: 20px;">
-                                Nenhum quarto cadastrado
-                            </td>
+        <div class="sign-room">
+            <div class="title">
+                <h1>Lista de Quartos</h1>
+                <a href="./create.php" class="btn btn-success">
+                    Novo Quarto
+                </a>
+            </div>
+            <div class="container-form">
+                <table cellpadding="8" cellspacing="0">
+                    <thead>
+                        <tr class="grid-header">
+                            <th>Id</th>
+                            <th>Número</th>
+                            <th>Tipo</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                            <th>Ações</th>
                         </tr>
-                    <?php else: ?>
-                        <?php foreach($quartos as $index => $quarto): ?>
-                        <tr class="grid-row <?= $index % 2 === 0 ? 'row-odd' : 'row-even' ?>">
-                            <td><?= htmlspecialchars($quarto['id']) ?></td>
-                            <td><?= htmlspecialchars($quarto['numero']) ?></td>
-                            <td><?= htmlspecialchars($quarto['tipo']) ?></td>
-                            <td>R$ <?= number_format($quarto['preco'], 2, ',', '.') ?></td>
-                            <td><?= $quarto['ativo'] ? 'Ativo' : 'Inativo' ?></td>
-                            <td>
-                                <button class="btn btn-primary action-button">Editar</button>
-                                <button class="btn btn-danger action-button">Excluir</button>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($quartos)): ?>
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 20px;">
+                                    Nenhum quarto cadastrado
+                                </td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($quartos as $index => $quarto): ?>
+                                <tr class="grid-row <?= $index % 2 === 0 ? 'row-odd' : 'row-even' ?>"
+                                    data-id="<?= $quarto['id'] ?>">
+                                    <td><?= htmlspecialchars($quarto['id']) ?></td>
+                                    <td data-field="numero"><?= htmlspecialchars($quarto['numero']) ?></td>
+                                    <td data-field="tipo"><?= htmlspecialchars($quarto['tipo']) ?></td>
+                                    <td data-field="preco">R$ <?= number_format($quarto['preco'], 2, ',', '.') ?></td>
+                                    <td data-field="ativo" data-value="<?= $quarto['ativo'] ?>">
+                                        <?= $quarto['ativo'] ? 'Ativo' : 'Inativo' ?>
+                                    </td>
+                                    <td class="actions">
+                                        <button class="btn btn-primary action-button btn-editar">Editar</button>
+                                        <button class="btn btn-danger action-button btn-excluir">Excluir</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    <div id="editModal" style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:1px solid #ccc;">
+    <form id="editForm">
+        <input type="hidden" name="id" id="edit-id">
+        Número: <input type="text" name="numero" id="edit-numero"><br>
+        Tipo: <input type="text" name="tipo" id="edit-tipo"><br>
+        Preço: <input type="text" name="preco" id="edit-preco"><br>
+        Ativo: <select name="ativo" id="edit-ativo">
+            <option value="1">Ativo</option>
+            <option value="0">Inativo</option>
+        </select><br>
+        <button type="submit">Salvar</button>
+        <button type="button" onclick="document.getElementById('editModal').style.display='none'">Cancelar</button>
+    </form>
 </div>
     <?php include '../includes/footer.php'; ?>
 </body>

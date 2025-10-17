@@ -24,16 +24,18 @@ class Quarto
         }
     }
 
-    public function listar() {
+    public function listar()
+    {
         try {
-            $stmt = $this->pdo->query("SELECT * FROM quartos ORDER BY id ASC");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "SELECT id, tipo, numero FROM quartos";
+            return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Erro ao listar quartos: " . $e->getMessage());
         }
     }
 
-    public function buscarPorId($id) {
+    public function buscarPorId($id)
+    {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM quartos WHERE id = ?");
             $stmt->execute([$id]);
@@ -43,7 +45,8 @@ class Quarto
         }
     }
 
-    public function atualizar($id, $numero, $tipo, $preco, $descricao, $ativo) {
+    public function atualizar($id, $numero, $tipo, $preco, $descricao, $ativo)
+    {
         try {
             $stmt = $this->pdo->prepare("UPDATE quartos SET numero = ?, tipo = ?, preco = ?, descricao = ?, ativo = ? WHERE id = ?");
             $stmt->execute([$numero, $tipo, $preco, $descricao, $ativo, $id]);
@@ -53,7 +56,8 @@ class Quarto
         }
     }
 
-    public function excluir($id) {
+    public function excluir($id)
+    {
         try {
             $stmt = $this->pdo->prepare("DELETE FROM quartos WHERE id = ?");
             $stmt->execute([$id]);

@@ -1,0 +1,97 @@
+<?php
+
+require_once '../config/conexao.php';
+require_once '../models/reserva.php';
+
+if (!isset($pdo)) {
+    http_response_code(500);
+    echo json_encode(['status' => 'erro', 'msg' => 'Erro de configuração: Conexão com o banco de dados ausente.']);
+    exit();
+}
+
+$reservaModel = new Reserva($pdo);
+
+function redirect($url)
+{
+    header("Location: $url");
+    exit();
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+    
+
+    header('Content-Type: application/json');
+
+    $input = json_decode(file_get_contents('php://input'), true);
+
+    if (!$input || empty($input['quarto_id']) || empty($input['nome_cliente']) || empty($input['email']) || empty($input['data_checkin']) || empty($input['data_checkout'])) {
+        error_log('Dados JSON inválidos ou obrigatórios ausentes.');
+        http_response_code(400);
+        echo json_encode(['status' => 'erro', 'msg' => 'Dados obrigatórios ausentes (quarto, nome, email, datas).']);
+        exit();
+    }
+    
+    if (strtotime($input['data_checkin']) >= strtotime($input['data_checkout'])) {
+        error_log('Erro de lógica de datas: check-out antes ou igual ao check-in.');
+        http_response_code(400);
+        echo json_encode(['status' => 'erro', 'msg' => 'Data de Check-out deve ser posterior à data de Check-in.']);
+        exit();
+    }
+
+
+    $dados = [
+        'quarto_id'    => $input['quarto_id'], 
+        'nome_cliente' => $input['nome_cliente'],
+        'email'        => $input['email'],
+        'cpf'          => $input['cpf'] ?? null, 
+        'telefone'     => $input['telefone'] ?? null,
+        'data_checkin' => $input['data_checkin'],
+        'data_checkout'=> $input['data_checkout'],
+        'status'       => $input['status'] ?? 'pendente',
+        'guests'       => $input['guests'] ?? 1,
+        'children'     => $input['children'] ?? 0,
+        'created_at'   => date('Y-m-d H:i:s')
+    ];
+
+    try {
+        $reservaModel->inserir($dados);
+        error_log('Reserva inserida com sucesso!');
+        http_response_code(200);
+        echo json_encode(['status' => 'ok', 'msg' => 'Reserva criada com sucesso']); 
+        exit();
+    } catch (Exception $e) {
+        error_log('Erro ao inserir reserva: ' . $e->getMessage());
+        http_response_code(500);
+        echo json_encode(['status' => 'erro', 'msg' => 'Erro interno do servidor ao salvar reserva.']);
+        exit();
+    }
+}
+
+if (isset($_POST['action']) && $_POST['action'] === 'create') {
+    $dados = [
+        'quarto_id'    => $_POST['quarto_id'] ?? null,
+        'nome_cliente' => $_POST['nome_cliente'] ?? null,
+        'data_checkout'=> $_POST['data_checkout'] ?? null,
+        'status'       => $_POST['status'] ?? 'pendente',
+        'guests'       => $_POST['guests'] ?? null,
+        'children'     => $_POST['children'] ?? null,
+        'created_at'   => date('Y-m-d H:i:s')
+    ];
+    
+    if ($dados['quarto_id'] && $dados['nome_cliente'] && $dados['email'] && $dados['cpf'] && $dados['telefone'] && $dados['data_checkin'] && $dados['data_checkout']) {
+        $reservaModel->inserir($dados);
+        redirect('../views/reservas/sucesso.php');
+    } else {
+        redirect('reserva-controller.php?action=create&error=1');
+    }
+}
+
+elseif (isset($_GET['action']) && $_GET['action'] === 'create') {
+    chdir('../views/reservas');
+    include 'create.php';
+}
+else {
+    chdir('../views/reservas');
+    include 'list.php';
+}

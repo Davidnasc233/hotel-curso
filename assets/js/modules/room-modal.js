@@ -36,7 +36,6 @@ function abrirModalDetalhes(quartoId) {
   }
 }
 
-
 function fecharModalDetalhes() {
   if (modalRoom) {
     modalRoom.classList.remove("show");
@@ -75,22 +74,8 @@ export function initRoomModal() {
   });
 }
 
-const reserva = document.getElementById("modalReserva");
-
-window.abrirModalReserva = function () {
-  if (reserva) {
-    console.log("Abrindo modalReserva...");
-    reserva.style.display = "flex"; // Exibe o modal
-  } else {
-    console.error("Modal reserva não encontrado!");
-  }
-};
-
-const openModalReserva = document.getElementById("openModalReserva");
-
 if (openModalReserva) {
   openModalReserva.addEventListener("click", () => {
-    console.log("Botão openModalReserva clicado");
     abrirModalReserva();
   });
 }

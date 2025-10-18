@@ -27,7 +27,7 @@ class Quarto
     public function listar()
     {
         try {
-            $sql = "SELECT id, tipo, numero FROM quartos";
+            $sql = "SELECT id, tipo, numero, preco, ativo FROM quartos";
             return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Erro ao listar quartos: " . $e->getMessage());
@@ -42,6 +42,16 @@ class Quarto
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             throw new Exception("Erro ao buscar quarto: " . $e->getMessage());
+        }
+    }
+
+    public function updateStatusRoom($id, $ativo) {
+        try {
+            $stmt = $this->pdo->prepare("UPDATE quartos SET ativo = ? WHERE id = ?");
+            $stmt->execute([$ativo, $id]);
+            return true;
+        } catch ( PDOException $e ) {
+            return $e->getMessage();
         }
     }
 

@@ -9,6 +9,10 @@ $dados = $reserva->listar();
 
 $quartoModel = new Quarto($pdo);
 $quartos = $quartoModel->listar();
+
+$quartos = array_filter($quartoModel->listar(), function ($q) {
+    return isset($q['ativo']) && $q['ativo'] == 1;
+});
 ?>
 
 <!DOCTYPE html>
@@ -59,15 +63,16 @@ $quartos = $quartoModel->listar();
 
                         <h3 class="title">Reserva</h3>
 
-                        <div method="POST" class="formulario reservationsList" id="formReserva">
+                        <div class="formulario reservationsList" id="formReserva">
 
                             <label for="" class="in-out">
                                 <p class="text">Entrada/Saída</p>
                                 <div class="d-flex">
+                                    <?php $hoje = date('Y-m-d'); ?>
                                     <input type="date" class="input-date" placeholder="Entrada" id="check_in"
-                                        name="data_checkin">
+                                        name="data_checkin" min="<?= $hoje ?>">
                                     <input type="date" class="input-date" placeholder="Saída" id="check_out"
-                                        name="data_checkout">
+                                        name="data_checkout" min="<?= $hoje ?>">
                                 </div>
                             </label>
 
@@ -78,7 +83,7 @@ $quartos = $quartoModel->listar();
                                     <option selected disabled>Quarto</option>
                                     <?php foreach ($quartos as $quarto): ?>
                                         <option value="<?= $quarto['id'] ?>">
-                                            <?= htmlspecialchars($quarto['tipo']) ?>
+                                            <?= htmlspecialchars($quarto['tipo']) ?> -
                                             <?= htmlspecialchars($quarto['numero']) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -121,10 +126,17 @@ $quartos = $quartoModel->listar();
                                                     required>
                                                 <p class="title-modal-reservation">Email*</p>
                                                 <input type="email" name="email" placeholder="Seu e-mail" required>
+                                                <span class="input-error" id="error-email"
+                                                    style="color:red;display:none;font-size:0.9em;"></span>
                                                 <p class="title-modal-reservation">CPF*</p>
-                                                <input type="number" name="cpf" placeholder="Seu CPF" required>
+                                                <span class="input-error" id="error-cpf"
+                                                    style="color:red;display:none;font-size:0.9em;"></span>
+                                                <input type="tel" name="cpf" placeholder="Seu CPF" required>
+                                                </span>
                                                 <p class="title-modal-reservation">Telefone*</p>
                                                 <input type="tel" name="telefone" placeholder="Seu telefone" required>
+                                                <span class="input-error" id="error-telefone"
+                                                    style="color:red;display:none;font-size:0.9em;"></span>
                                             </div>
                                             <div class="vertical-line" aria-hidden="true"></div>
                                             <div>

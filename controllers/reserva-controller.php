@@ -2,6 +2,7 @@
 
 require_once '../config/conexao.php';
 require_once '../models/reserva.php';
+require_once '../models/quarto.php';
 
 if (!isset($pdo)) {
     http_response_code(500);
@@ -10,6 +11,7 @@ if (!isset($pdo)) {
 }
 
 $reservaModel = new Reserva($pdo);
+$quartoModel = new Quarto($pdo); // 0 = inativo
 
 function redirect($url)
 {
@@ -19,7 +21,7 @@ function redirect($url)
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
-    
+
 
     header('Content-Type: application/json');
 
@@ -31,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
         echo json_encode(['status' => 'erro', 'msg' => 'Dados obrigatórios ausentes (quarto, nome, email, datas).']);
         exit();
     }
-    
+
     if (strtotime($input['data_checkin']) >= strtotime($input['data_checkout'])) {
         error_log('Erro de lógica de datas: check-out antes ou igual ao check-in.');
         http_response_code(400);
@@ -41,24 +43,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
 
 
     $dados = [
-        'quarto_id'    => $input['quarto_id'], 
+        'quarto_id' => $input['quarto_id'],
         'nome_cliente' => $input['nome_cliente'],
-        'email'        => $input['email'],
-        'cpf'          => $input['cpf'] ?? null, 
-        'telefone'     => $input['telefone'] ?? null,
+        'email' => $input['email'],
+        'cpf' => $input['cpf'] ?? null,
+        'telefone' => $input['telefone'] ?? null,
         'data_checkin' => $input['data_checkin'],
-        'data_checkout'=> $input['data_checkout'],
-        'status'       => $input['status'] ?? 'pendente',
-        'guests'       => $input['guests'] ?? 1,
-        'children'     => $input['children'] ?? 0,
-        'created_at'   => date('Y-m-d H:i:s')
+        'data_checkout' => $input['data_checkout'],
+        'status' => $input['status'] ?? 'pendente',
+        'guests' => $input['guests'] ?? 1,
+        'children' => $input['children'] ?? 0,
+        'created_at' => date('Y-m-d H:i:s')
     ];
 
     try {
         $reservaModel->inserir($dados);
+        $quartoModel->updateStatusRoom($dados['quarto_id'], 0);
         error_log('Reserva inserida com sucesso!');
         http_response_code(200);
-        echo json_encode(['status' => 'ok', 'msg' => 'Reserva criada com sucesso']); 
+        echo json_encode(['status' => 'ok', 'msg' => 'Reserva criada com sucesso']);
         exit();
     } catch (Exception $e) {
         error_log('Erro ao inserir reserva: ' . $e->getMessage());
@@ -70,28 +73,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
 
 if (isset($_POST['action']) && $_POST['action'] === 'create') {
     $dados = [
-        'quarto_id'    => $_POST['quarto_id'] ?? null,
+        'quarto_id' => $_POST['quarto_id'] ?? null,
         'nome_cliente' => $_POST['nome_cliente'] ?? null,
-        'data_checkout'=> $_POST['data_checkout'] ?? null,
-        'status'       => $_POST['status'] ?? 'pendente',
-        'guests'       => $_POST['guests'] ?? null,
-        'children'     => $_POST['children'] ?? null,
-        'created_at'   => date('Y-m-d H:i:s')
+        'data_checkout' => $_POST['data_checkout'] ?? null,
+        'status' => $_POST['status'] ?? 'pendente',
+        'guests' => $_POST['guests'] ?? null,
+        'children' => $_POST['children'] ?? null,
+        'created_at' => date('Y-m-d H:i:s')
     ];
-    
+
     if ($dados['quarto_id'] && $dados['nome_cliente'] && $dados['email'] && $dados['cpf'] && $dados['telefone'] && $dados['data_checkin'] && $dados['data_checkout']) {
         $reservaModel->inserir($dados);
         redirect('../views/reservas/sucesso.php');
     } else {
         redirect('reserva-controller.php?action=create&error=1');
     }
-}
-
-elseif (isset($_GET['action']) && $_GET['action'] === 'create') {
+} elseif (isset($_GET['action']) && $_GET['action'] === 'create') {
     chdir('../views/reservas');
     include 'create.php';
-}
-else {
+} else {
     chdir('../views/reservas');
     include 'list.php';
 }

@@ -9,6 +9,18 @@ body {
   font-family: "roboto", sans-serif;
 }
 
+/* Estilo para inputs inválidos */
+.is-invalid {
+  border: 2px solid #dc3545 !important;
+  background-color: #fff0f0;
+}
+.input-error {
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 2px;
+  display: block;
+}
+
 .banner img {
   height: 1200px;
   background-repeat: no-repeat;
@@ -177,7 +189,7 @@ option {
   font-size: 13px;
 }
 
-form p {
+.formulario p {
   color: #ffffff;
   font-family: "roboto", sans-serif;
 }

@@ -56,9 +56,12 @@ if (!isset($quartos)) {
                                     <td><?= htmlspecialchars($quarto['id']) ?></td>
                                     <td data-field="numero"><?= htmlspecialchars($quarto['numero']) ?></td>
                                     <td data-field="tipo"><?= htmlspecialchars($quarto['tipo']) ?></td>
-                                    <td data-field="preco">R$ <?= number_format($quarto['preco'], 2, ',', '.') ?></td>
-                                    <td data-field="ativo" data-value="<?= $quarto['ativo'] ?>">
-                                        <?= $quarto['ativo'] ? 'Ativo' : 'Inativo' ?>
+                                    <td data-field="preco">
+                                        R$
+                                        <?= isset($quarto['preco']) ? number_format($quarto['preco'], 2, ',', '.') : '0,00' ?>
+                                    </td>
+                                    <td data-field="ativo" data-value="<?= isset($quarto['ativo']) ? $quarto['ativo'] : 0 ?>">
+                                        <?= (isset($quarto['ativo']) && $quarto['ativo']) ? 'Ativo' : 'Inativo' ?>
                                     </td>
                                     <td class="actions">
                                         <button class="btn btn-primary action-button btn-editar">Editar</button>
@@ -72,20 +75,21 @@ if (!isset($quartos)) {
             </div>
         </div>
     </div>
-    <div id="editModal" style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:1px solid #ccc;">
-    <form id="editForm">
-        <input type="hidden" name="id" id="edit-id">
-        Número: <input type="text" name="numero" id="edit-numero"><br>
-        Tipo: <input type="text" name="tipo" id="edit-tipo"><br>
-        Preço: <input type="text" name="preco" id="edit-preco"><br>
-        Ativo: <select name="ativo" id="edit-ativo">
-            <option value="1">Ativo</option>
-            <option value="0">Inativo</option>
-        </select><br>
-        <button type="submit">Salvar</button>
-        <button type="button" onclick="document.getElementById('editModal').style.display='none'">Cancelar</button>
-    </form>
-</div>
+    <div id="editModal"
+        style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:1px solid #ccc;">
+        <form id="editForm">
+            <input type="hidden" name="id" id="edit-id">
+            Número: <input type="text" name="numero" id="edit-numero"><br>
+            Tipo: <input type="text" name="tipo" id="edit-tipo"><br>
+            Preço: <input type="text" name="preco" id="edit-preco"><br>
+            Ativo: <select name="ativo" id="edit-ativo">
+                <option value="1">Ativo</option>
+                <option value="0">Inativo</option>
+            </select><br>
+            <button type="submit">Salvar</button>
+            <button type="button" onclick="document.getElementById('editModal').style.display='none'">Cancelar</button>
+        </form>
+    </div>
     <?php include '../includes/footer.php'; ?>
 </body>
 

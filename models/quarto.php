@@ -45,12 +45,13 @@ class Quarto
         }
     }
 
-    public function updateStatusRoom($id, $ativo) {
+    public function updateStatusRoom($id, $ativo)
+    {
         try {
             $stmt = $this->pdo->prepare("UPDATE quartos SET ativo = ? WHERE id = ?");
             $stmt->execute([$ativo, $id]);
             return true;
-        } catch ( PDOException $e ) {
+        } catch (PDOException $e) {
             return $e->getMessage();
         }
     }

@@ -6,80 +6,79 @@ import { initHeaderScroll } from "../../assets/js/modules/header-scroll.js";
 import { initAccommodationFilter } from "../../assets/js/modules/accommodation-filter.js";
 import { initRoomModal } from "../../assets/js/modules/room-modal.js";
 
-// Espera o DOM carregar completamente para executar os scripts
+// Função para mostrar erro visual e mensagem
+function mostrarErro(input, errorSpan, mensagem) {
+  input.classList.add("is-invalid");
+  errorSpan.textContent = mensagem;
+  errorSpan.style.display = "block";
+}
+function limparErro(input, errorSpan) {
+  input.classList.remove("is-invalid");
+  errorSpan.textContent = "";
+  errorSpan.style.display = "none";
+}
+
+// Máscara CPF
+function mascaraCPF(cpf) {
+  cpf = cpf.replace(/\D/g, "");
+  cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+  cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
+  cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  return cpf;
+}
+const cpfInput = document.querySelector('[name="cpf"]');
+if (cpfInput) {
+  cpfInput.addEventListener("input", function () {
+    this.value = mascaraCPF(this.value);
+  });
+}
+
+// Máscara Telefone
+function mascaraTelefone(tel) {
+  tel = tel.replace(/\D/g, "");
+  tel = tel.replace(/^(\d{2})(\d)/g, "($1) $2");
+  tel = tel.replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+  return tel;
+}
+const telInput = document.querySelector('[name="telefone"]');
+if (telInput) {
+  telInput.addEventListener("input", function () {
+    this.value = mascaraTelefone(this.value);
+  });
+}
+
+// Validação de e-mail
+function validarEmail(email) {
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+}
+
+// Validação de CPF
+function validarCPF(cpf) {
+  cpf = cpf.replace(/[^\d]+/g, "");
+  if (cpf.length !== 11 || /^([0-9])\1+$/.test(cpf)) return false;
+  let soma = 0,
+    resto;
+  for (let i = 1; i <= 9; i++)
+    soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.substring(9, 10))) return false;
+  soma = 0;
+  for (let i = 1; i <= 10; i++)
+    soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.substring(10, 11))) return false;
+  return true;
+}
+
+// Validação de telefone simples (mínimo 10 dígitos)
+function validarTelefone(tel) {
+  tel = tel.replace(/\D/g, "");
+  return tel.length >= 10 && tel.length <= 11;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-  // Função para mostrar erro visual e mensagem
-  function mostrarErro(input, errorSpan, mensagem) {
-    input.classList.add("is-invalid");
-    errorSpan.textContent = mensagem;
-    errorSpan.style.display = "block";
-  }
-  function limparErro(input, errorSpan) {
-    input.classList.remove("is-invalid");
-    errorSpan.textContent = "";
-    errorSpan.style.display = "none";
-  }
-  // Máscara CPF
-  function mascaraCPF(cpf) {
-    cpf = cpf.replace(/\D/g, "");
-    cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
-    cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2");
-    cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-    return cpf;
-  }
-  const cpfInput = document.querySelector('[name="cpf"]');
-  if (cpfInput) {
-    cpfInput.addEventListener("input", function () {
-      this.value = mascaraCPF(this.value);
-    });
-  }
-
-  // Máscara Telefone
-  function mascaraTelefone(tel) {
-    tel = tel.replace(/\D/g, "");
-    tel = tel.replace(/^(\d{2})(\d)/g, "($1) $2");
-    tel = tel.replace(/(\d{5})(\d{1,4})$/, "$1-$2");
-    return tel;
-  }
-  const telInput = document.querySelector('[name="telefone"]');
-  if (telInput) {
-    telInput.addEventListener("input", function () {
-      this.value = mascaraTelefone(this.value);
-    });
-  }
-
-  // Validação de e-mail
-  function validarEmail(email) {
-    return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
-  }
-
-  // Validação de CPF
-  function validarCPF(cpf) {
-    cpf = cpf.replace(/[^\d]+/g, "");
-    if (cpf.length !== 11 || /^([0-9])\1+$/.test(cpf)) return false;
-    let soma = 0,
-      resto;
-    for (let i = 1; i <= 9; i++)
-      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf.substring(9, 10))) return false;
-    soma = 0;
-    for (let i = 1; i <= 10; i++)
-      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf.substring(10, 11))) return false;
-    return true;
-  }
-
-  // Validação de telefone simples (mínimo 10 dígitos)
-  function validarTelefone(tel) {
-    tel = tel.replace(/\D/g, "");
-    return tel.length >= 10 && tel.length <= 11;
-  }
-  console.log("DOM fully loaded and parsed. Initializing modules...");
-
   // Inicializa cada módulo
   initNewsletter();
   initHeaderScroll();
@@ -197,7 +196,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const errorTelefone = document.getElementById("error-telefone");
 
       let erro = false;
-      // Limpa erros anteriores
       limparErro(emailInput, errorEmail);
       limparErro(cpfInput, errorCpf);
       limparErro(telefoneInput, errorTelefone);
@@ -230,10 +228,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const dadosReserva = {
         ...dadosPrincipais,
         quarto_id: dadosPrincipais.quarto_id,
-        nome_cliente,
-        email,
-        cpf,
-        telefone,
+        nome_cliente: nome_cliente.value,
+        email: emailInput.value,
+        cpf: cpfInput.value,
+        telefone: telefoneInput.value,
         data_checkin: dadosPrincipais.check_in,
         data_checkout: dadosPrincipais.check_out,
         status: "pendente",

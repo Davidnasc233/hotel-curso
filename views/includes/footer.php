@@ -27,7 +27,7 @@
             <hr>
             <div class="media">
                 <div class="links">
-                    <img src="../../assets/images/logo-light.png" alt="logo-light">
+                    <img src="/projeto-hotel/assets/images/logo-light.png" alt="logo-light">
                     <p>Today we can tell you, thanks to your <br>
                         passion, hard work creativity, and <br>
                         expertise, you delivered us the most <br>

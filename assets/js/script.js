@@ -4,7 +4,7 @@
 import { initNewsletter } from "../../assets/js/modules/newsletter.js";
 import { initHeaderScroll } from "../../assets/js/modules/header-scroll.js";
 import { initAccommodationFilter } from "../../assets/js/modules/accommodation-filter.js";
-import { initRoomModal } from "../../assets/js/modules/room-modal.js";
+// import { initRoomModal } from "../../assets/js/modules/room-modal.js";
 
 // Função para mostrar erro visual e mensagem
 function mostrarErro(input, errorSpan, mensagem) {
@@ -274,4 +274,52 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
   }
+});
+
+// editar quartos
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Abrir modal e preencher campos ao clicar em Editar
+  document.querySelectorAll(".btn-editar").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      // Preenche os campos do modal com os dados do botão
+      document.getElementById("edit-id").value = this.dataset.id;
+      document.getElementById("edit-numero").value = this.dataset.numero;
+      document.getElementById("edit-tipo").value = this.dataset.tipo;
+      document.getElementById("edit-preco").value = this.dataset.preco;
+      document.getElementById("edit-ativo").value = this.dataset.ativo;
+      // Exibe o modal
+      document.getElementById("modalWidth").style.display = "flex";
+    });
+  });
+
+  // Fechar modal ao cancelar
+  document
+    .getElementById("editForm")
+    .querySelector('button[type="button"]').onclick = function () {
+    document.getElementById("modalWidth").style.display = "none";
+  };
+
+  // Envio do formulário de edição via POST tradicional
+  document.getElementById("editForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    formData.append("action", "edit");
+
+    fetch("../../controllers/room-controller.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === "ok") {
+          alert("Quarto atualizado com sucesso!");
+          window.location.reload();
+        } else {
+          alert("Erro ao atualizar quarto: " + (data.msg || ""));
+        }
+      })
+      .catch(() => alert("Erro na comunicação com o servidor."));
+  });
 });

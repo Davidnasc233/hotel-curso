@@ -24,7 +24,7 @@ $reservas = $reservaModel->listar();
         <div class="sign-room">
             <div class="title">
                 <h2>Reservas Cadastradas</h2>
-                <a href="./create.php" class="btn btn-success p-0">
+                <a href="./create.php" class="btn btn-success">
                     Novo Quarto
                 </a>
             </div>
@@ -35,6 +35,9 @@ $reservas = $reservaModel->listar();
                             <th>ID</th>
                             <th>Quarto</th>
                             <th>Cliente</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>CPF</th>
                             <th>Entrada</th>
                             <th>Saída</th>
                             <th>Ações</th>
@@ -46,13 +49,20 @@ $reservas = $reservaModel->listar();
                                 <td><?= $r['id'] ?></td>
                                 <td>Quarto <?= $r['numero_quarto'] ?> (<?= $r['tipo'] ?>)</td>
                                 <td><?= htmlspecialchars($r['nome_cliente']) ?></td>
+                                <td><?= htmlspecialchars($r['email']) ?></td>
+                                <td><?= htmlspecialchars($r['telefone']) ?></td>
+                                <td><?= htmlspecialchars($r['cpf']) ?></td>
                                 <td><?= date('d/m/Y', strtotime($r['data_checkin'])) ?></td>
                                 <td><?= date('d/m/Y', strtotime($r['data_checkout'])) ?></td>
                                 <td>
                                     <button class="btn btn-primary action-button"
                                         href="edit.php?id=<?= $r['id'] ?>">Editar</button>
-                                    <button class="btn btn-danger action-button" href="delete.php?id=<?= $r['id'] ?>"
-                                        onclick="return confirm('Excluir reserva?')">Excluir</button>
+                                    <form method="post" action="../../controllers/reserva-controller.php"
+                                        style="display:inline;" onsubmit="return confirm('Excluir reserva?')">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="id" value="<?= $r['id'] ?>">
+                                        <button type="submit" class="btn btn-danger action-button">Excluir</button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

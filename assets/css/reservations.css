@@ -72,29 +72,33 @@ table {
   padding: 20px 15px;
 }
 
-.grid-header {
-  display: grid;
-  grid-template-columns: 80px 1fr 1fr 1fr 1fr 2.5fr;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  border-bottom: 1px solid #ddd;
-}
-
+.grid-header,
 .grid-row {
   display: grid;
+  grid-template-columns: 80px 1fr 1fr 1.5fr 1fr 1fr 1fr 1fr 2.5fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+  /* Garante que header e rows usem o mesmo layout */
+  box-sizing: border-box;
+}
+
+.grid-header-2,
+.grid-row-2 {
+  display: grid;
   grid-template-columns: 80px 1fr 1fr 1fr 1fr 2.5fr;
   align-items: center;
   gap: 10px;
   padding: 8px 12px;
   border-bottom: 1px solid #ddd;
+  /* Garante que header e rows usem o mesmo layout */
+  box-sizing: border-box;
 }
-
 
 tbody tr:last-child {
   border-bottom: none;
 }
-
 
 tbody tr:only-child {
   border-bottom: none;
@@ -111,7 +115,7 @@ tbody tr:nth-child(odd) {
 
 /* Classes específicas para linhas alternadas */
 .row-even {
-  background-color:  #ffffff!important;
+  background-color: #ffffff !important;
 }
 
 .row-odd {
@@ -135,14 +139,63 @@ tbody tr:nth-child(odd) {
   padding: 5px 0;
 }
 
+#modalWidth {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+#editModal {
+  background: #fff;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 30%;
+  position: relative;
+  box-shadow: 0 4px 32px #463f3f22;
+}
+
+#editForm {
+  gap: 0;
+}
+
+#editForm input,
+select {
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  outline: none;
+  padding: 0 15px 0;
+  height: 35px;
+  width: 100% !important;
+}
+
+#editForm p {
+  color: #8d8d8d !important;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}
+
 /* Sucesso.php */
 
 .central-modal {
   width: 100%;
   height: auto;
- display: flex;
- align-items: center;
- justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-sucess-room {

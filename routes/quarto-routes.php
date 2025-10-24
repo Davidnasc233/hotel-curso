@@ -5,7 +5,8 @@ require_once '../models/quarto.php';
 $quartoModel = new Quarto($pdo);
 
 // Função para redirecionar
-function redirect($url) {
+function redirect($url)
+{
     header("Location: $url");
     exit();
 }
@@ -15,7 +16,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'list') {
     try {
         $quartos = $quartoModel->listar();
         include 'list-rooms.php';
-        
+
     } catch (Exception $e) {
         echo "Erro ao listar quartos: " . $e->getMessage();
     }
@@ -43,7 +44,7 @@ elseif (isset($_POST['action']) && $_POST['action'] === 'create') {
 
     if ($numero && $tipo && $preco && $descricao) {
         $result = $quartoModel->create($numero, $tipo, $preco, $descricao, $ativo);
-        
+
         if ($result === true) {
             redirect('../views/reservas/sucesso.php');
         } else {
@@ -56,6 +57,6 @@ elseif (isset($_POST['action']) && $_POST['action'] === 'create') {
 
 // Rota padrão - listar quartos
 else {
-    redirect('../views/reservas/list-rooms.php');
+    redirect('/projeto-hotel/views/reservas/list.php');
 }
 ?>

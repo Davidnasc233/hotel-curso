@@ -827,7 +827,7 @@ button:hover {
 /* Modal Reserva */
 
 .modal-reserva {
-  display: none; /* Inicialmente oculto */
+  display: none;
   position: fixed;
   z-index: 10000;
   left: 0;

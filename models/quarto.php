@@ -1,4 +1,5 @@
 <?php
+
 class Quarto
 {
     private $pdo;

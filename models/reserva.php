@@ -82,8 +82,12 @@ class Reserva
 
     public function remover($id)
     {
-        $sql = "DELETE FROM reservas WHERE id = :id";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([':id' => $id]);
+        try {
+            $sql = "DELETE FROM reservas WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

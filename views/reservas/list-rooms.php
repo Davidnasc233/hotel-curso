@@ -33,7 +33,7 @@ if (!isset($quartos)) {
             <div class="container-form">
                 <table cellpadding="8" cellspacing="0">
                     <thead>
-                        <tr class="grid-header">
+                        <tr class="grid-header-2">
                             <th>Id</th>
                             <th>Número</th>
                             <th>Tipo</th>
@@ -51,7 +51,7 @@ if (!isset($quartos)) {
                             </tr>
                         <?php else: ?>
                             <?php foreach ($quartos as $index => $quarto): ?>
-                                <tr class="grid-row <?= $index % 2 === 0 ? 'row-odd' : 'row-even' ?>"
+                                <tr class="grid-row-2 <?= $index % 2 === 0 ? 'row-odd' : 'row-even' ?>"
                                     data-id="<?= $quarto['id'] ?>">
                                     <td><?= htmlspecialchars($quarto['id']) ?></td>
                                     <td data-field="numero"><?= htmlspecialchars($quarto['numero']) ?></td>
@@ -64,8 +64,22 @@ if (!isset($quartos)) {
                                         <?= (isset($quarto['ativo']) && $quarto['ativo']) ? 'Ativo' : 'Inativo' ?>
                                     </td>
                                     <td class="actions">
-                                        <button class="btn btn-primary action-button btn-editar">Editar</button>
-                                        <button class="btn btn-danger action-button btn-excluir">Excluir</button>
+                                        <button type="button" class="btn btn-primary action-button btn-editar"
+                                            data-id="<?= $quarto['id'] ?>"
+                                            data-numero="<?= htmlspecialchars($quarto['numero']) ?>"
+                                            data-tipo="<?= htmlspecialchars($quarto['tipo']) ?>"
+                                            data-preco="<?= htmlspecialchars($quarto['preco']) ?>"
+                                            data-ativo="<?= isset($quarto['ativo']) ? $quarto['ativo'] : 0 ?>">
+                                            Editar
+                                        </button>
+                                        <form method="post" action="../../controllers/room-controller.php"
+                                            style="display:inline;"
+                                            onsubmit="return confirm('Deseja realmente excluir este quarto?')">
+                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="id" value="<?= $quarto['id'] ?>">
+                                            <button type="submit"
+                                                class="btn btn-danger action-button btn-excluir">Excluir</button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -75,22 +89,33 @@ if (!isset($quartos)) {
             </div>
         </div>
     </div>
-    <div id="editModal"
-        style="display:none; position:fixed; top:20%; left:35%; background:#fff; padding:20px; border:1px solid #ccc;">
-        <form id="editForm">
-            <input type="hidden" name="id" id="edit-id">
-            Número: <input type="text" name="numero" id="edit-numero"><br>
-            Tipo: <input type="text" name="tipo" id="edit-tipo"><br>
-            Preço: <input type="text" name="preco" id="edit-preco"><br>
-            Ativo: <select name="ativo" id="edit-ativo">
-                <option value="1">Ativo</option>
-                <option value="0">Inativo</option>
-            </select><br>
-            <button type="submit">Salvar</button>
-            <button type="button" onclick="document.getElementById('editModal').style.display='none'">Cancelar</button>
-        </form>
+    <div id="modalWidth">
+        <div id="editModal">
+            <h3 class="title">Edite um Quarto</h3>
+            <hr>
+            <form id="editForm">
+                <input type="hidden" name="id" id="edit-id">
+                <p>Número:</p>
+                <input type="text" name="numero" id="edit-numero"><br>
+                <p>Tipo:</p>
+                <input type="text" name="tipo" id="edit-tipo"><br>
+                <p>Preço:</p>
+                <input type="text" name="preco" id="edit-preco"><br>
+                <p>Ativo:</p>
+                <select name="ativo" id="edit-ativo">
+                    <option value="1">Ativo</option>
+                    <option value="0">Inativo</option>
+                </select><br>
+                <div class="buttons">
+                    <button type="button" class="btn btn-outline-secondary"
+                        onclick="document.getElementById('editModal').style.display='none'">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Salvar</button>
+                </div>
+            </form>
+        </div>
     </div>
     <?php include '../includes/footer.php'; ?>
+    <script type="module" src="../../assets/js/script.js"></script>
 </body>
 
 </html>

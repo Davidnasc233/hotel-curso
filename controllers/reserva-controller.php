@@ -102,3 +102,61 @@ if (isset($_POST['action']) && $_POST['action'] === 'create') {
     include 'list.php';
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'edit') {
+    $id = $_POST['id'] ?? null;
+    $quarto_id = $_POST['quarto'] ?? null;
+    $email = $_POST['email'] ?? null;
+    $telefone = $_POST['telefone'] ?? null;
+    $data_checkin = $_POST['checkin'] ?? null;
+    $data_checkout = $_POST['checkout'] ?? null;
+    if ($id && $quarto_id && $email && $telefone && $data_checkin && $data_checkout) {
+        if (empty($quarto_id)) {
+            echo 'erro: quarto vazio';
+            exit;
+        }
+        // Buscar o quarto antigo antes de atualizar
+        $reservaAntiga = $reservaModel->buscarPorId($id);
+        $quartoAntigo = $reservaAntiga['quarto_id'] ?? null;
+
+        // Se o quarto foi alterado, não passar $id_ignorar (pois não existe reserva com esse id/quarto)
+        $conflito = false;
+        if ($quartoAntigo == $quarto_id) {
+            $conflito = $reservaModel->existeConflito($quarto_id, $data_checkin, $data_checkout, $id);
+        } else {
+            $conflito = $reservaModel->existeConflito($quarto_id, $data_checkin, $data_checkout);
+        }
+        if ($conflito) {
+            echo 'erro: conflito';
+            exit;
+        }
+
+        $dados = [
+            'quarto_id' => $quarto_id,
+            'email' => $email,
+            'telefone' => $telefone,
+            'data_checkin' => $data_checkin,
+            'data_checkout' => $data_checkout,
+            'status' => 'pendente',
+            'guests' => 1,
+            'children' => 0
+        ];
+        try {
+            $reservaModel->atualizar($id, $dados);
+        } catch (Exception $e) {
+            echo 'erro: ' . $e->getMessage();
+            exit;
+        }
+
+        // Marcar o novo quarto como inativo e o antigo como ativo (se mudou)
+        if ($quartoAntigo && $quartoAntigo != $quarto_id) {
+            $quartoModel->updateStatusRoom($quartoAntigo, 1); // Ativo
+            $quartoModel->updateStatusRoom($quarto_id, 0);    // Inativo
+        }
+
+        echo 'ok';
+    } else {
+        echo 'erro';
+    }
+    exit;
+}
+

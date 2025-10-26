@@ -25,8 +25,8 @@ class Reserva
             ':data_checkin' => $dados['data_checkin'],
             ':data_checkout' => $dados['data_checkout'],
             ':status' => $dados['status'],
-            ':guests' => (int)($dados['guests'] ?? 1), 
-            ':children' => (int)($dados['children'] ?? 0),
+            ':guests' => (int) ($dados['guests'] ?? 1),
+            ':children' => (int) ($dados['children'] ?? 0),
             ':created_at' => $dados['created_at'] ?? date('Y-m-d H:i:s')
         ]);
     }
@@ -50,13 +50,11 @@ class Reserva
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-        public function atualizar($id, $dados)
+    public function atualizar($id, $dados)
     {
         $sql = "UPDATE reservas SET
             quarto_id = :quarto_id,
-            nome_cliente = :nome_cliente,
             email = :email,
-            cpf = :cpf,
             telefone = :telefone,
             data_checkin = :data_checkin,
             data_checkout = :data_checkout,
@@ -64,20 +62,41 @@ class Reserva
             guests = :guests,
             children = :children
             WHERE id = :id";
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([
+                ':quarto_id' => $dados['quarto_id'],
+                ':email' => $dados['email'],
+                ':telefone' => $dados['telefone'],
+                ':data_checkin' => $dados['data_checkin'],
+                ':data_checkout' => $dados['data_checkout'],
+                ':status' => $dados['status'],
+                ':guests' => (int) ($dados['guests'] ?? 1),
+                ':children' => (int) ($dados['children'] ?? 0),
+                ':id' => $id
+            ]);
+        } catch (\PDOException $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
+    // ...existing code...
+
+    public function existeConflito($quarto_id, $data_checkin, $data_checkout, $id_ignorar = null)
+    {
+        $sql = "SELECT COUNT(*) FROM reservas WHERE quarto_id = :quarto_id
+            AND (data_checkin < :data_checkout AND data_checkout > :data_checkin)";
+        $params = [
+            ':quarto_id' => $quarto_id,
+            ':data_checkin' => $data_checkin,
+            ':data_checkout' => $data_checkout
+        ];
+        if (!is_null($id_ignorar)) {
+            $sql .= " AND id != :id_ignorar";
+            $params[':id_ignorar'] = $id_ignorar;
+        }
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([
-            ':quarto_id' => $dados['quarto_id'],
-            ':nome_cliente' => $dados['nome_cliente'],
-            ':email' => $dados['email'],
-            ':cpf' => $dados['cpf'],
-            ':telefone' => $dados['telefone'],
-            ':data_checkin' => $dados['data_checkin'],
-            ':data_checkout' => $dados['data_checkout'],
-            ':status' => $dados['status'],
-            ':guests' => (int)($dados['guests'] ?? 1),
-            ':children' => (int)($dados['children'] ?? 0),
-            ':id' => $id
-        ]);
+        $stmt->execute($params);
+        return $stmt->fetchColumn() > 0;
     }
 
     public function remover($id)

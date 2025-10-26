@@ -165,7 +165,7 @@ $quartos = array_filter($quartoModel->listar(), function ($q) {
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end mt-2 gap-2">
-                                            <button class="btn btn-outline-secondary">
+                                            <button class="btn btn-outline-secondary" id="cancelarModalReserva">
                                                 Cancelar
                                             </button>
                                             <button type="submit" class="btn-modal-reservation">

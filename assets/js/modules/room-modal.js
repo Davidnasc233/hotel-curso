@@ -1,5 +1,3 @@
-// js/modules/roomModal.js
-
 const quartos = {
   casal01: {
     title: "Detalhes do Quarto Casal 01",
@@ -51,9 +49,8 @@ export function initRoomModal() {
   const closeModalButton = document.getElementById("closeModalRoom");
   const btnCloseModal = modalRoom.querySelector(".btn-close-modal");
   const saibaMaisButtons = document.querySelectorAll(".quarto-card button");
-  const quartoIds = ["solteiro01", "casal01", "casalSuite"]; // Garante a ordem correta
+  const quartoIds = ["solteiro01", "casal01", "casalSuite"];
 
-  // Eventos para fechar o modal
   if (closeModalButton) {
     closeModalButton.addEventListener("click", fecharModalDetalhes);
   }
@@ -65,7 +62,6 @@ export function initRoomModal() {
       fecharModalDetalhes();
     }
   });
-  // Adicionar eventos aos botões "SAIBA MAIS"
   saibaMaisButtons.forEach((button, index) => {
     const quartoId = quartoIds[index];
     if (quartoId) {
@@ -74,6 +70,7 @@ export function initRoomModal() {
   });
 }
 
+const openModalReserva = document.getElementById("openModalReserva");
 if (openModalReserva) {
   openModalReserva.addEventListener("click", () => {
     abrirModalReserva();

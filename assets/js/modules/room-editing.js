@@ -33,17 +33,18 @@ function setupEditModal() {
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.status === "ok") {
-                        alert("Quarto atualizado com sucesso!");
-                        window.location.reload();
+                        if (modal) modal.style.display = "none";
                     } else {
-                        alert("Erro ao atualizar quarto: " + (data.msg || ""));
+                        console.error("Erro ao editar o quarto:", data.message || data);
                     }
                 })
-                .catch(() => alert("Erro na comunicação com o servidor."));
+                .catch(() => {
+                    throw new Error("Erro de comunicação com o servidor.");
+                });
         });
     }
 }
 
 export function initRoomEditing() {
-    setupEditModal();
+  setupEditModal();
 }

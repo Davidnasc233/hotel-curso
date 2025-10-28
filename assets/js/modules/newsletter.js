@@ -17,7 +17,6 @@ function closeModalSucess() {
   }
 }
 
-// Exporta a função principal que inicializa a funcionalidade
 export function initNewsletter() {
   if (!form || !emailInput || !errorMessage || !modalNewsletter) {
     console.warn("Elementos do formulário de newsletter não encontrados.");
@@ -33,13 +32,12 @@ export function initNewsletter() {
       errorMessage.textContent = "Por favor, insira um email válido.";
       errorMessage.style.color = "red";
     } else {
-      errorMessage.textContent = ""; // Limpa a mensagem de erro
+      errorMessage.textContent = "";
       openModalSucess();
       emailInput.value = "";
     }
   });
 
-  // Eventos para fechar o modal de sucesso
   if (btnCloseNewsletter) {
     btnCloseNewsletter.onclick = closeModalSucess
 ;

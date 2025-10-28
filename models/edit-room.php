@@ -1,6 +1,5 @@
 <?php
-// editar-quarto.php
-include '../includes/db.php'; // ajuste conforme seu projeto
+include '../includes/db.php';
 
 $id = $_POST['id'];
 $numero = $_POST['numero'];

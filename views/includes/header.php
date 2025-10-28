@@ -8,7 +8,16 @@
                 <li><a href="#inicio" id="home">Home</a></li>
                 <li><a href="#">Sobre</a></li>
                 <li><a href="#">Contato</a></li>
-
+                <?php
+                if (session_status() === PHP_SESSION_NONE)
+                    session_start();
+                if (isset($_SESSION['usuario_id'])): ?>
+                    <li>
+                        <form action="../../controllers/logout.php" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" style="width: fit-content;">Sair</button>
+                        </form>
+                    </li>
+                <?php endif; ?>
             </ul>
         </nav>
 

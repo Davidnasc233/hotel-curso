@@ -34,7 +34,7 @@ export function validarCPF(cpf) {
   return true;
 }
 
-// Validação de telefone simples (mínimo 10 dígitos)
+// Validação de telefone simples
 export function validarTelefone(tel) {
   tel = tel.replace(/\D/g, "");
   return tel.length >= 10 && tel.length <= 11;

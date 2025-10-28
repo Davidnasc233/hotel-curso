@@ -4,7 +4,6 @@ require_once '../models/quarto.php';
 
 $quartoModel = new Quarto($pdo);
 
-// Função para redirecionar
 function redirect($url)
 {
     header("Location: $url");
@@ -55,7 +54,6 @@ elseif (isset($_POST['action']) && $_POST['action'] === 'create') {
     }
 }
 
-// Rota padrão - listar quartos
 else {
     redirect('/projeto-hotel/views/reservas/list.php');
 }

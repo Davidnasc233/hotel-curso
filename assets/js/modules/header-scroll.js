@@ -1,5 +1,3 @@
-// js/modules/headerScroll.js
-
 export function initHeaderScroll() {
     const header = document.querySelector("header");
   

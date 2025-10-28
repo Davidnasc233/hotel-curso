@@ -17,7 +17,6 @@ try {
 
     $pdo->exec($sql);
     
-    // Criar tabela quartos
     $sql_quartos = "CREATE TABLE IF NOT EXISTS quartos (
         id INT AUTO_INCREMENT PRIMARY KEY,
         numero VARCHAR(10) NOT NULL UNIQUE,

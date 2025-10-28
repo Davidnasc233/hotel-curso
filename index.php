@@ -408,7 +408,24 @@ $quartos = array_filter($quartoModel->listar(), function ($q) {
 
         </footer>
     </div>
+    <div id="customSuccessModal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:400px;margin:auto;">
+            <span class="close" id="closeCustomSuccess"
+                style="position:absolute;top:10px;right:20px;cursor:pointer;font-size:1.5em;">&times;</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#28a745"
+                class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                <path
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.992a.75.75 0 1 0-1.06-1.06L7.5 9.439 6.03 7.97a.75.75 0 1 0-1.06 1.06l1.999 2z" />
+            </svg>
+            <h3>Sucesso!</h3>
+            <p id="customSuccessMessage">Reserva realizada com sucesso!</p>
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:20px;">
+                <button id="customSuccessOk" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
     <script type="module" src="./assets/js/script.js"></script>
+    <script type="module" src="./assets/js/modules/custom-success-modal.js"></script>
 </body>
 
 

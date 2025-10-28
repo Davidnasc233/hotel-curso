@@ -79,7 +79,6 @@ class Reserva
             throw new \Exception($e->getMessage());
         }
     }
-    // ...existing code...
 
     public function existeConflito($quarto_id, $data_checkin, $data_checkout, $id_ignorar = null)
     {

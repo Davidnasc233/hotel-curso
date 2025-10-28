@@ -92,3 +92,4 @@
     </div>
 
 </footer>
+<script type="module" src="/projeto-hotel/assets/js/script.js"></script>

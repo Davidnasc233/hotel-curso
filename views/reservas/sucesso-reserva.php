@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../assets/css/includes.css">
     <link rel="stylesheet" href="../../assets/css/reservations.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Document</title>
+    <title>Reserva Criada</title>
 </head>
 
 <body>
@@ -15,10 +15,10 @@
     <div class="container-main">
         <div class="central-modal">
             <div class="modal-sucess-room">
-                <h2>Quarto cadastrado com sucesso!</h2>
+                <h2>Reserva criada com sucesso!</h2>
                 <div class="btn-modal">
-                    <a href="./list-rooms.php" class="btn btn-primary">Ver Quartos</a>
-                    <a href="./create.php" class="btn btn-success">Cadastrar Novo</a>
+                    <a href="./list.php" class="btn btn-primary">Ver Reservas</a>
+                    <a href="./create-reservation-form.php" class="btn btn-success">Nova Reserva</a>
                 </div>
             </div>
         </div>

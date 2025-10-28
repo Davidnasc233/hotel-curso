@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
     }
 }
 
-if ($_POST['action'] === 'delete' && isset($_POST['id'])) {
+if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id'])) {
     $reservaModel->remover($_POST['id']);
     header('Location: /projeto-hotel/views/reservas/list.php');
     exit;
@@ -81,6 +81,10 @@ if (isset($_POST['action']) && $_POST['action'] === 'create') {
     $dados = [
         'quarto_id' => $_POST['quarto_id'] ?? null,
         'nome_cliente' => $_POST['nome_cliente'] ?? null,
+        'email' => $_POST['email'] ?? null,
+        'cpf' => $_POST['cpf'] ?? null,
+        'telefone' => $_POST['telefone'] ?? null,
+        'data_checkin' => $_POST['data_checkin'] ?? null,
         'data_checkout' => $_POST['data_checkout'] ?? null,
         'status' => $_POST['status'] ?? 'pendente',
         'guests' => $_POST['guests'] ?? null,
@@ -90,7 +94,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create') {
 
     if ($dados['quarto_id'] && $dados['nome_cliente'] && $dados['email'] && $dados['cpf'] && $dados['telefone'] && $dados['data_checkin'] && $dados['data_checkout']) {
         $reservaModel->inserir($dados);
-        redirect('../views/reservas/sucesso.php');
+        redirect('../views/reservas/sucesso-reserva.php');
     } else {
         redirect('reserva-controller.php?action=create&error=1');
     }
@@ -109,54 +113,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $telefone = $_POST['telefone'] ?? null;
     $data_checkin = $_POST['checkin'] ?? null;
     $data_checkout = $_POST['checkout'] ?? null;
-    if ($id && $quarto_id && $email && $telefone && $data_checkin && $data_checkout) {
-        if (empty($quarto_id)) {
-            echo 'erro: quarto vazio';
-            exit;
-        }
-        // Buscar o quarto antigo antes de atualizar
-        $reservaAntiga = $reservaModel->buscarPorId($id);
-        $quartoAntigo = $reservaAntiga['quarto_id'] ?? null;
-
-        // Se o quarto foi alterado, não passar $id_ignorar (pois não existe reserva com esse id/quarto)
-        $conflito = false;
-        if ($quartoAntigo == $quarto_id) {
-            $conflito = $reservaModel->existeConflito($quarto_id, $data_checkin, $data_checkout, $id);
-        } else {
-            $conflito = $reservaModel->existeConflito($quarto_id, $data_checkin, $data_checkout);
-        }
-        if ($conflito) {
-            echo 'erro: conflito';
-            exit;
-        }
-
-        $dados = [
-            'quarto_id' => $quarto_id,
-            'email' => $email,
-            'telefone' => $telefone,
-            'data_checkin' => $data_checkin,
-            'data_checkout' => $data_checkout,
-            'status' => 'pendente',
-            'guests' => 1,
-            'children' => 0
-        ];
-        try {
-            $reservaModel->atualizar($id, $dados);
-        } catch (Exception $e) {
-            echo 'erro: ' . $e->getMessage();
-            exit;
-        }
-
-        // Marcar o novo quarto como inativo e o antigo como ativo (se mudou)
-        if ($quartoAntigo && $quartoAntigo != $quarto_id) {
-            $quartoModel->updateStatusRoom($quartoAntigo, 1); // Ativo
-            $quartoModel->updateStatusRoom($quarto_id, 0);    // Inativo
-        }
-
-        echo 'ok';
-    } else {
-        echo 'erro';
+    $erros = [];
+    if (!$id)
+        $erros[] = 'ID da reserva ausente';
+    if (!$quarto_id)
+        $erros[] = 'Quarto não selecionado';
+    if (!$email)
+        $erros[] = 'E-mail não informado';
+    if (!$telefone)
+        $erros[] = 'Telefone não informado';
+    if (!$data_checkin)
+        $erros[] = 'Data de entrada não informada';
+    if (!$data_checkout)
+        $erros[] = 'Data de saída não informada';
+    if (!empty($erros)) {
+        echo 'erro: ' . implode('; ', $erros);
+        exit;
     }
+    $reservaAntiga = $reservaModel->buscarPorId($id);
+    $quartoAntigo = $reservaAntiga['quarto_id'] ?? null;
+
+    $dados = [
+        'quarto_id' => $quarto_id,
+        'email' => $email,
+        'telefone' => $telefone,
+        'data_checkin' => $data_checkin,
+        'data_checkout' => $data_checkout
+    ];
+    if (isset($_POST['status']))
+        $dados['status'] = $_POST['status'];
+    if (isset($_POST['guests']))
+        $dados['guests'] = $_POST['guests'];
+    if (isset($_POST['children']))
+        $dados['children'] = $_POST['children'];
+
+    try {
+        $reservaModel->atualizar($id, $dados);
+    } catch (Exception $e) {
+        echo 'erro: ' . $e->getMessage();
+        exit;
+    }
+
+    // Marcar o novo quarto como inativo e o antigo como ativo (se mudou)
+    if ($quartoAntigo && $quartoAntigo != $quarto_id) {
+        $quartoModel->updateStatusRoom($quartoAntigo, 1); // Ativo
+        $quartoModel->updateStatusRoom($quarto_id, 0);    // Inativo
+    }
+
+    echo 'ok';
     exit;
 }
 

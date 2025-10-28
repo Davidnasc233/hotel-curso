@@ -26,9 +26,14 @@ if (!isset($quartos)) {
         <div class="sign-room">
             <div class="title">
                 <h1>Lista de Quartos</h1>
-                <a href="./create.php" class="btn btn-success">
-                    Novo Quarto
-                </a>
+                <div class="buttons">
+                    <a href="./list.php" class="btn btn-success">
+                        Gerenciamento de Reservas
+                    </a>
+                    <a href="./create.php" class="btn btn-success">
+                        Novo Quarto
+                    </a>
+                </div>
             </div>
             <div class="container-form">
                 <table cellpadding="8" cellspacing="0">
@@ -73,13 +78,43 @@ if (!isset($quartos)) {
                                             Editar
                                         </button>
                                         <form method="post" action="../../controllers/room-controller.php"
-                                            style="display:inline;"
-                                            onsubmit="return confirm('Deseja realmente excluir este quarto?')">
+                                            class="delete-room-form" style="display:inline;">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="<?= $quarto['id'] ?>">
-                                            <button type="submit"
-                                                class="btn btn-danger action-button btn-excluir">Excluir</button>
+                                            <button type="button" class="btn btn-danger action-button btn-excluir"
+                                                data-id="<?= $quarto['id'] ?>">Excluir</button>
                                         </form>
+                                        <!-- Modal de confirmação de exclusão (global, fora da tabela) -->
+                                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1"
+                                            aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content" style="max-width: 350px">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title d-flex align-items-center"
+                                                            id="confirmDeleteLabel">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                                                fill="#ffc107" class="bi bi-exclamation-triangle-fill me-2"
+                                                                viewBox="0 0 16 16">
+                                                                <path
+                                                                    d="M8.982 1.566a1.13 1.13 0 0 0-1.964 0L.165 13.233c-.457.778.091 1.767.982 1.767h13.707c.89 0 1.438-.99.982-1.767L8.982 1.566zm-.982 4.905a.905.905 0 1 1 1.81 0l-.35 3.507a.552.552 0 0 1-1.11 0l-.35-3.507zm.002 6.002a1 1 0 1 1 2 0 1 1 0 0 1-2 0z" />
+                                                            </svg>
+                                                            Confirmar Exclusão
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Fechar"></button>
+                                                    </div>
+                                                    <div class="modal-body" id="deleteModalBody">
+                                                        Tem certeza que deseja excluir este quarto?
+                                                    </div>
+                                                    <div class="modal-footer d-flex">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancelar</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            id="confirmDeleteBtn">Excluir</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -89,7 +124,28 @@ if (!isset($quartos)) {
             </div>
         </div>
     </div>
-    <div id="modalWidth">
+    <!-- Modal de sucesso ao editar -->
+    <div class="modal fade" id="successEditModal" tabindex="-1" aria-labelledby="successEditLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="max-width: 350px">
+                <div class="modal-header">
+                    <h5 class="modal-title d-flex align-items-center" id="successEditLabel">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#28a745"
+                            class="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.992a.75.75 0 1 0-1.06-1.06L7.5 9.439 6.03 7.97a.75.75 0 1 0-1.06 1.06l1.999 2z" />
+                        </svg>
+                        Sucesso
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    Quarto atualizado com sucesso!
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modalWidth"
+        style="display:none;align-items:center;justify-content:center;position:fixed;z-index:1050;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);">
         <div id="editModal">
             <h3 class="title">Edite um Quarto</h3>
             <hr>
@@ -108,7 +164,7 @@ if (!isset($quartos)) {
                 </select><br>
                 <div class="buttons">
                     <button type="button" class="btn btn-outline-secondary"
-                        onclick="document.getElementById('editModal').style.display='none'">Cancelar</button>
+                        onclick="document.getElementById('modalWidth').style.display='none'">Cancelar</button>
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </div>
             </form>
@@ -116,6 +172,8 @@ if (!isset($quartos)) {
     </div>
     <?php include '../includes/footer.php'; ?>
     <script type="module" src="../../assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../../assets/js/modules/room-list.js"></script>
 </body>
 
 </html>

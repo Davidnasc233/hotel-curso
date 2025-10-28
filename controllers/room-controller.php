@@ -10,7 +10,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
     $tipo = $_POST['tipo'];
     $preco = $_POST['preco'];
     $ativo = $_POST['ativo'];
-    // Adapte se tiver campo descricao
     $descricao = isset($_POST['descricao']) ? $_POST['descricao'] : '';
 
     $result = $quartoModel->atualizar($id, $numero, $tipo, $preco, $descricao, $ativo);

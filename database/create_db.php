@@ -1,22 +1,29 @@
-<?php 
+<?php
 require_once '../config/conexao.php';
 
 try {
     $pdo->exec("CREATE DATABASE IF NOT EXISTS hotel");
     $pdo->exec("USE hotel");
 
+
     $sql = "CREATE TABLE IF NOT EXISTS reservas (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        checkin DATE NOT NULL,
-        checkout DATE NOT NULL,
-        room VARCHAR(50) NOT NULL,
-        guests VARCHAR(100) NOT NULL,
+        quarto_id INT NOT NULL,
+        nome_cliente VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        cpf VARCHAR(20),
+        telefone VARCHAR(20),
+        data_checkin DATE NOT NULL,
+        data_checkout DATE NOT NULL,
+        status VARCHAR(20) DEFAULT 'pendente',
+        guests INT DEFAULT 1,
         children INT DEFAULT 0,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (quarto_id) REFERENCES quartos(id)
     )";
 
     $pdo->exec($sql);
-    
+
     $sql_quartos = "CREATE TABLE IF NOT EXISTS quartos (
         id INT AUTO_INCREMENT PRIMARY KEY,
         numero VARCHAR(10) NOT NULL UNIQUE,
@@ -26,8 +33,18 @@ try {
         ativo TINYINT(1) DEFAULT 1,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
-    
+
     $pdo->exec($sql_quartos);
+
+    $sql_usuarios = "CREATE TABLE IF NOT EXISTS usuarios (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        senha VARCHAR(255) NOT NULL,
+        nome VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+    $pdo->exec($sql_usuarios);
+
     echo "✅ Banco e tabelas criadas!";
 } catch (PDOException $e) {
     die("Erro: " . $e->getMessage());

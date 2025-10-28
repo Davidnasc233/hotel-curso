@@ -46,8 +46,8 @@ projeto-hotel/
 │   └── create_db.php
 ├── models/
 │   ├── quarto.php
-│   ├── reserva.php
-│   └── edit-room.php
+│   └── reserva.php
+│   
 ├── routes/
 │   ├── quarto-routes.php
 │   └── reserva-routes.php

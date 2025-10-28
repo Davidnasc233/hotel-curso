@@ -3,6 +3,12 @@ require_once '../../config/conexao.php';
 require_once '../../models/reserva.php';
 require_once '../../models/quarto.php';
 
+session_start();
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../index.php');
+    exit;
+}
+
 $reservaModel = new Reserva($pdo);
 $reservas = $reservaModel->listar();
 $quartoModel = new Quarto($pdo);

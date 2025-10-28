@@ -1,5 +1,10 @@
 <?php
-// Verificar se a variável existe, se não, buscar os dados
+session_start();
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: ../index.php');
+    exit;
+}
+
 if (!isset($quartos)) {
     require_once '../../config/conexao.php';
     require_once '../../models/quarto.php';

@@ -45,6 +45,17 @@ try {
     )";
     $pdo->exec($sql_usuarios);
 
+    $adminEmail = 'admin@admin.com';
+    $adminNome = 'Administrador';
+    $adminSenha = password_hash('admin', PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
+    $stmt->execute([$adminEmail]);
+    if ($stmt->fetchColumn() == 0) {
+        $stmt = $pdo->prepare("INSERT INTO usuarios (email, senha, nome) VALUES (?, ?, ?)");
+        $stmt->execute([$adminEmail, $adminSenha, $adminNome]);
+        echo "\nUsuário admin padrão criado: admin@admin.com / senha: admin";
+    }
+
     echo "✅ Banco e tabelas criadas!";
 } catch (PDOException $e) {
     die("Erro: " . $e->getMessage());

@@ -199,13 +199,11 @@ export function initReservationForm() {
 
   if (checkInInput) {
     checkInInput.addEventListener("change", () => {
-      console.log("Data de entrada selecionada:", checkInInput.value);
     });
   }
 
   if (checkOutInput) {
     checkOutInput.addEventListener("change", () => {
-      console.log("Data de saída selecionada:", checkOutInput.value);
     });
   }
   const cancelarBtn = document.getElementById("cancelarModalReserva");

@@ -86,7 +86,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'create') {
         'telefone' => $_POST['telefone'] ?? null,
         'data_checkin' => $_POST['data_checkin'] ?? null,
         'data_checkout' => $_POST['data_checkout'] ?? null,
-        'status' => $_POST['status'] ?? 'pendente',
+        'status' => $_POST['status'] ?? 'confirmada',
         'guests' => $_POST['guests'] ?? null,
         'children' => $_POST['children'] ?? null,
         'created_at' => date('Y-m-d H:i:s')

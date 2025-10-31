@@ -15,6 +15,11 @@ class Reserva
         ) VALUES (
             :quarto_id, :nome_cliente, :email, :cpf, :telefone, :data_checkin, :data_checkout, :status, :guests, :children, :created_at
         )";
+        // Validação para ENUM: só aceita 'confirmada' ou 'cancelada'
+        $status = isset($dados['status']) && in_array($dados['status'], ['confirmada', 'cancelada'])
+            ? $dados['status']
+            : 'confirmada';
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             ':quarto_id' => $dados['quarto_id'],

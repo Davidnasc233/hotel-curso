@@ -23,6 +23,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'edit') {
 
 if ($_POST['action'] === 'delete' && isset($_POST['id'])) {
     $quartoModel->excluir($_POST['id']);
-    header('Location: /projeto-hotel/views/reservas/list-rooms.php');
+    header('Location: /views/reservas/list-rooms.php');
     exit;
 }

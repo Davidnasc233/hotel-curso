@@ -55,6 +55,6 @@ elseif (isset($_POST['action']) && $_POST['action'] === 'create') {
 }
 
 else {
-    redirect('/projeto-hotel/views/reservas/list.php');
+    redirect('/views/reservas/list.php');
 }
 ?>

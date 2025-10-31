@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
 
 if (isset($_POST['action']) && $_POST['action'] === 'delete' && isset($_POST['id'])) {
     $reservaModel->remover($_POST['id']);
-    header('Location: /projeto-hotel/views/reservas/list.php');
+    header('Location: /views/reservas/list.php');
     exit;
 }
 

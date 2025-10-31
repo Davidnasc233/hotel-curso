@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="image">
-                <img src="/projeto-hotel/assets/images/hotel-background-5jpqs0sw51owiprj.jpg" alt="imagem hotel">
+                <img src="/assets/images/hotel-background-5jpqs0sw51owiprj.jpg" alt="imagem hotel">
             </div>
         </div>
     </div>

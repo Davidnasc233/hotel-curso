@@ -15,7 +15,7 @@ try {
         telefone VARCHAR(20),
         data_checkin DATE NOT NULL,
         data_checkout DATE NOT NULL,
-        status VARCHAR(20) DEFAULT 'pendente',
+        status ENUM('confirmada', 'cancelada') DEFAULT 'confirmada',
         guests INT DEFAULT 1,
         children INT DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

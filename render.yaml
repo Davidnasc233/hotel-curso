@@ -1,0 +1,24 @@
+services:
+  - type: web
+    env: docker
+    name: meu-php
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: host
+        fromDatabase:
+          name: hotel_yzwk
+          property: host
+      - key: user
+        fromDatabase:
+          name: hotel_yzwk
+          property: user
+      - key: password
+        fromDatabase:
+          name: hotel_yzwk
+          property: password
+      - key: database
+        fromDatabase:
+          name: hotel_yzwk
+          property: database
